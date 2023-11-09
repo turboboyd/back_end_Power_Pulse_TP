@@ -1,25 +1,30 @@
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+import nodemailer from 'nodemailer';
+import 'dotenv/config';
 
-const { META_PASSWORD } = process.env;
+const { GMAIL_PASSWORD, GMAIL_EMAIL } = process.env;
 
 const nodemailerConfig = {
-  host: "smtp.office365.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: "denisdaniv1@outlook.com",
-    pass: META_PASSWORD,
-  },
-};
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: GMAIL_EMAIL,
+        pass: GMAIL_PASSWORD
+    }
+}
 
 const transport = nodemailer.createTransport(nodemailerConfig);
 
 const sendEmail = async (data) => {
-  await transport.sendMail({
-    ...data,
-    from: "denisdaniv1@outlook.com",
-  });
-};
+    const email = { ...data, from: GMAIL_EMAIL };
+    try {
+        await transport.sendMail(email);
+        return true;
+    }
+    catch (error) {
+        console.error(error.message);
+        return false;
+    }
+}
 
-module.exports = sendEmail;
+export default sendEmail;
