@@ -1,34 +1,27 @@
-const jwt = require("jsonwebtoken");
+import httpError from "../helpers/httpError.js";
+import ctrlWrapper from "../helpers/ctrlWrapper.js";
+import User from "../models/user-model.js";
+import jwt from 'jsonwebtoken';
 
-const { User } = require("../models/user");
-
-const { HttpError } = require("../helpers");
-
-const { SECRET_KEY } = process.env;
+const { JWT_SECRET } = process.env;
 
 const authenticate = async (req, res, next) => {
-  const { authorization = "" } = req.headers;
+    const { authorization = '' } = req.headers;
+    const [bearer, token] = authorization.split(" ");
 
-  const [bearer, token] = authorization.split(" ");
+    if (bearer !== 'Bearer') throw httpError(401, 'Not authorized');
 
-  if (bearer !== "Bearer") {
-    next(HttpError(401, "Not authorized1"));
-  }
-
-  try {
-    const { id } = jwt.verify(token, SECRET_KEY);
-    const user = await User.findById(id);
-
-    if (!user || !user.token || user.token !== token) {
-      return next(HttpError(401, "Not authorized"));
+    try {
+        const { id } = jwt.verify(token, JWT_SECRET);
+        const user = await User.findById(id);
+        if (!user || !user.token) throw httpError(401, 'Not authorized');
+        req.user = user;
+        next();
     }
 
-    req.user = user;
+    catch (error) {
+        next(httpError(401, 'Not authorized'))
+    }
+}
 
-    next();
-  } catch {
-    next(HttpError(401, "Not authorized"));
-  }
-};
-
-module.exports = authenticate;
+export default ctrlWrapper(authenticate);
