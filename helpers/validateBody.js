@@ -1,4 +1,4 @@
-import httpError from "./httpError.js";
+import httpError from "./HttpError.js";
 
 const validateBody = schema => {
     const func = (req, res, next) => {

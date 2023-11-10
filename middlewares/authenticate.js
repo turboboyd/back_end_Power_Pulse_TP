@@ -1,4 +1,4 @@
-import httpError from "../helpers/httpError.js";
+import httpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import User from "../models/user-model.js";
 import jwt from 'jsonwebtoken';
