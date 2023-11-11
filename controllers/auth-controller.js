@@ -1,4 +1,5 @@
 import User from "../models/user-model.js";
+import { ProfileSettings } from "../models/profile-settings-model.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import httpError from "../helpers/HttpError.js";
 import sendEmail from "../helpers/sendEmail.js";
@@ -72,7 +73,7 @@ const authorization = async (req, res) => {
     const user = await User.findOne({ email });
     const passwordCompare = await bcrypt.compare(password, user.password);
     const payload = { id: user._id };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '23h' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
 
     if (!user) throw httpError(401, "Email or password invalid");
     if (!passwordCompare) throw httpError(401, "Email or password invalid");
@@ -92,12 +93,15 @@ const authorization = async (req, res) => {
 
 const getCurrent = async (req, res) => {
     const { email, name, token, id } = req.user;
+    const settings = await ProfileSettings.findOne({ owner: id });
+    console.log(settings)
     res.json({
         token: token,
         user: {
             email: email,
             name: name,
             UserID: id,
+            ProfileSettings: settings
         }
     })
 }
