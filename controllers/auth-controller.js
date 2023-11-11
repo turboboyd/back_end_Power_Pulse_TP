@@ -71,6 +71,7 @@ const resendVerifyEmail = async (req, res) => {
 const authorization = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    const settings = await ProfileSettings.findOne({ owner: user.id });
     const passwordCompare = await bcrypt.compare(password, user.password);
     const payload = { id: user._id };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
@@ -82,11 +83,11 @@ const authorization = async (req, res) => {
     await User.findByIdAndUpdate(user._id, { token });
 
     res.json({
-        token: token,
         user: {
             email: user.email,
             name: user.name,
-            UserID: user._id
+            token: token,
+            ProfileSettings: settings
         }
     });
 }
@@ -96,11 +97,10 @@ const getCurrent = async (req, res) => {
     const settings = await ProfileSettings.findOne({ owner: id });
     console.log(settings)
     res.json({
-        token: token,
         user: {
             email: email,
             name: name,
-            UserID: id,
+            token: token,
             ProfileSettings: settings
         }
     })

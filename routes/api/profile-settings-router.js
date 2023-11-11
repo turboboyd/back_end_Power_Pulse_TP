@@ -12,7 +12,7 @@ const profileSetingsJoiValidate = validateBody(profileSettingsJoiAddSchema);
 
 profileSetingsRouter.use(authenticate);
 profileSetingsRouter.post('/', isEmptyBody, profileSetingsJoiValidate, profileSetingsValidate, ProfileSettings.addProfileSettings);
-profileSetingsRouter.put('/:id', isEmptyBody, idValidation, profileSetingsJoiValidate, ProfileSettings.updateProfileSettings)
-profileSetingsRouter.get('/:id', ProfileSettings.getProfileSettings)
+profileSetingsRouter.put('/', isEmptyBody, profileSetingsJoiValidate, ProfileSettings.updateProfileSettings)
+profileSetingsRouter.get('/', ProfileSettings.getProfileSettings)
 
 export default profileSetingsRouter;
