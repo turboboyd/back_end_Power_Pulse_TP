@@ -9,14 +9,14 @@ const addProfileSettings = async (req, res) => {
 }
 
 const updateProfileSettings = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.user;
     const result = await ProfileSettings.findOneAndUpdate({ owner: id }, req.body);
     if (!result) throw httpError(404, 'Not Found');
     res.json(result);
 }
 
 const getProfileSettings = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.user;
     const result = await ProfileSettings.findOne({ owner: id });
     if (!result) throw httpError(404, 'Not Found');
     res.json(result);
