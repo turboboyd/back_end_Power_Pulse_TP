@@ -5,6 +5,7 @@ import authRouter from './routes/api/auth-router.js';
 import profileSetingsRouter from './routes/api/profile-settings-router.js';
 import exercisesRouter from './routes/api/exercises.js';
 import productsRouter from './routes/api/products.js';
+import diaryRouter from './routes/api/diary.js';
 
 const app = express();
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -18,6 +19,7 @@ app.use('/api/users', authRouter);
 app.use('/api/profileSettings', profileSetingsRouter);
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/diary', diaryRouter);
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found' })
