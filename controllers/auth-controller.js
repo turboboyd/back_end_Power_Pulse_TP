@@ -32,6 +32,7 @@ const registration = async (req, res) => {
         user: {
             email: newUser.email,
             name: newUser.name,
+            verify: newUser.verify,
         }
     });
 }
@@ -39,12 +40,18 @@ const registration = async (req, res) => {
 const verify = async (req, res) => {
     const { verificationToken } = req.params;
     const user = await User.findOne({ verificationToken });
+    const payload = { id: user._id };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
 
     if (!user) throw httpError(404, 'User not found');
 
-    await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: null });
+    await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: null, token: token });
     res.json({
-        message: 'Verification successful'
+        user: {
+            name: user.name,
+            email: user.email,
+            token: token
+        }
     })
 }
 
