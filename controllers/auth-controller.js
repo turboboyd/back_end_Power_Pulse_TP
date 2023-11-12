@@ -39,11 +39,11 @@ const registration = async (req, res) => {
 const verify = async (req, res) => {
     const { verificationToken } = req.params;
     const user = await User.findOne({ verificationToken });
+    if (!user) throw httpError(404, 'User not found');
     const payload = { id: user._id };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     const settings = await ProfileSettings.findOne({ owner: user.id }, "-_id -createdAt -updatedAt -owner");
 
-    if (!user) throw httpError(404, 'User not found');
 
     await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: null, token: token });
     res.json({
