@@ -38,7 +38,7 @@ const addSchema = Joi.object({
     "date.base": "date must be a valid date",
     "any.required": "date is a required field",
   }),
-  product: Joi.string()
+  productId: Joi.string()
     .required()
     .hex()
     .length(24)
