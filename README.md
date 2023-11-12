@@ -111,11 +111,20 @@ Body:
 
 Status codes:
 201 Created
+{
+    "height": Number,
+    "currentWeight": Number,
+    "desiredWeight": Number,
+    "birthday": Date,
+    "blood": Number,
+    "sex": String,
+    "levelActivity": Number 
+}
 401 Unauthorized
 400 Bad Request (Data has been already added)
 
 ## Update Profile settings
-PUT: https://power-pulse-dq7h.onrender.com/api/profileSettings/UserID
+PUT: https://power-pulse-dq7h.onrender.com/api/profileSettings/
 
 Content-Type: application/json
 Body:
@@ -131,15 +140,33 @@ Body:
 
 Status codes:
 200 OK
+{
+    "height": Number,
+    "currentWeight": Number,
+    "desiredWeight": Number,
+    "birthday": Date,
+    "blood": Number,
+    "sex": String,
+    "levelActivity": Number 
+}
 401 Unauthorized
 400 Bad Request 
 
 ## Get Profile settings
-GET: https://power-pulse-dq7h.onrender.com/api/profileSettings/UserID
+GET: https://power-pulse-dq7h.onrender.com/api/profileSettings/
 
 Headers:
 Authorization: Bearer Token
 
 Status codes:
 200 OK
+{
+    "height": Number,
+    "currentWeight": Number,
+    "desiredWeight": Number,
+    "birthday": Date,
+    "blood": Number,
+    "sex": String,
+    "levelActivity": Number 
+}
 401 Unauthorized

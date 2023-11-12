@@ -42,6 +42,9 @@ const profileSettingsSchema = new Schema({
         ref: 'user',
         required: true,
     },
+    bmr: {
+        type: Number
+    }
 }, { versionKey: false, timestamps: true })
 
 profileSettingsSchema.post('save', handleSaveError);

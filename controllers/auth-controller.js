@@ -14,7 +14,6 @@ const registration = async (req, res) => {
     const { email, password } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
     const verificationToken = nanoid();
-
     const user = await User.findOne({ email });
     if (user) throw httpError(409, "Email in use");
 
@@ -33,7 +32,7 @@ const registration = async (req, res) => {
             email: newUser.email,
             name: newUser.name,
             verify: newUser.verify,
-        }
+        },
     });
 }
 
@@ -42,6 +41,7 @@ const verify = async (req, res) => {
     const user = await User.findOne({ verificationToken });
     const payload = { id: user._id };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
+    const settings = await ProfileSettings.findOne({ owner: id }, "-_id -createdAt -updatedAt -owner");
 
     if (!user) throw httpError(404, 'User not found');
 
@@ -50,8 +50,9 @@ const verify = async (req, res) => {
         user: {
             name: user.name,
             email: user.email,
-            token: token
-        }
+            profile_settings: settings,
+        },
+        token: token
     })
 }
 
@@ -93,23 +94,22 @@ const authorization = async (req, res) => {
         user: {
             email: user.email,
             name: user.name,
-            token: token,
-            ProfileSettings: settings
-        }
+            profile_settings: settings
+        },
+        token: token,
     });
 }
 
 const getCurrent = async (req, res) => {
     const { email, name, token, id } = req.user;
     const settings = await ProfileSettings.findOne({ owner: id }, "-_id -createdAt -updatedAt -owner");
-    console.log(settings)
     res.json({
         user: {
             email: email,
             name: name,
-            token: token,
-            ProfileSettings: settings
-        }
+            profile_settings: settings,
+        },
+        token: token,
     })
 }
 
