@@ -14,8 +14,6 @@ const registration = async (req, res) => {
     const { email, password } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
     const verificationToken = nanoid();
-    const payload = { id: user._id };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     const user = await User.findOne({ email });
     if (user) throw httpError(409, "Email in use");
 
@@ -35,7 +33,6 @@ const registration = async (req, res) => {
             name: newUser.name,
             verify: newUser.verify,
         },
-        token: token,
     });
 }
 
