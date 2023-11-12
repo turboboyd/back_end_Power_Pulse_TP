@@ -5,6 +5,8 @@ import httpError from "../helpers/HttpError.js";
 import sendEmail from "../helpers/sendEmail.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
+import gravatar from 'gravatar';
+import Jimp from 'jimp';
 import 'dotenv/config';
 import { nanoid } from "nanoid";
 
@@ -15,9 +17,10 @@ const registration = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
     const verificationToken = nanoid();
     const user = await User.findOne({ email });
+    const avatarURL = gravatar.url(email)
     if (user) throw httpError(409, "Email in use");
 
-    const newUser = await User.create({ ...req.body, password: hashPassword, verificationToken });
+    const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationToken });
 
     const verifyEmail = {
         to: email,
@@ -44,13 +47,12 @@ const verify = async (req, res) => {
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     const settings = await ProfileSettings.findOne({ owner: user.id }, "-_id -createdAt -updatedAt -owner");
 
-    // { verify: true, verificationToken: null, token: token }
-    await User.findByIdAndUpdate(user._id);
+    await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: null, token: token });
     res.json({
         user: {
             name: user.name,
             email: user.email,
-            profile_settings: settings,
+            profileSettings: settings,
         },
         token: token
     })
@@ -94,7 +96,7 @@ const authorization = async (req, res) => {
         user: {
             email: user.email,
             name: user.name,
-            profile_settings: settings
+            profileSettings: settings
         },
         token: token,
     });
@@ -107,7 +109,7 @@ const getCurrent = async (req, res) => {
         user: {
             email: email,
             name: name,
-            profile_settings: settings,
+            profileSettings: settings,
         },
         token: token,
     })
