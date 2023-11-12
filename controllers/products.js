@@ -1,4 +1,5 @@
 import { Product } from "../models/products.js";
+import { ProfileSettings } from "../models/profile-settings-model.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 
 const listProducts = async (req, res) => {
@@ -8,15 +9,17 @@ const listProducts = async (req, res) => {
   res.json(result);
 };
 
-// const listProductsBlood = async (req, res) => {
-//   const userBloodType = req.user.blood;
-//   const allowBloodType = req.query.allowBloodType === 'true';
-//   const query = allowBloodType ? { [`groupBloodNotAllowed.${userBloodType}`]: false } : { [`groupBloodNotAllowed.${userBloodType}`]: true };
-//   const result = await Product.find(query);
-//   res.json(result);
-// };
+const listProductsBlood = async (req, res) => {
+  const { _id: owner } = req.user;
+  const {allowBloodType} = req.query;
+  const { blood } = await ProfileSettings.findOne({ owner });
+  const key = `groupBloodNotAllowed.${blood}`;
+  const result = await Product.find({ [key]: allowBloodType });
+  res.json(result);
+};
+
 
 export default {
   listProducts: ctrlWrapper(listProducts),
-  // listProductsBlood: ctrlWrapper(listProductsBlood),
+  listProductsBlood: ctrlWrapper(listProductsBlood),
 };
