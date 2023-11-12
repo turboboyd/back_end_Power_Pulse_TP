@@ -25,7 +25,7 @@ const registration = async (req, res) => {
     const verifyEmail = {
         to: email,
         subject: 'Verify Email',
-        html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click to verify email</a>`
+        html: `<a target="_blank" href="http://localhost:3000/verify/${verificationToken}">Click to verify email</a>`
     };
 
     await sendEmail(verifyEmail);
@@ -96,7 +96,7 @@ const authorization = async (req, res) => {
         user: {
             email: user.email,
             name: user.name,
-            profileSettings: settings
+            profile_settings: settings
         },
         token: token,
     });
@@ -109,7 +109,7 @@ const getCurrent = async (req, res) => {
         user: {
             email: email,
             name: name,
-            profileSettings: settings,
+            profile_settings: settings,
         },
         token: token,
     })
