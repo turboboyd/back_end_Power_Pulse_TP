@@ -47,8 +47,7 @@ const verify = async (req, res) => {
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     const settings = await ProfileSettings.findOne({ owner: user.id }, "-_id -createdAt -updatedAt -owner");
 
-    // { verify: true, verificationToken: null, token: token }
-    await User.findByIdAndUpdate(user._id);
+    await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: null, token: token });
     res.json({
         user: {
             name: user.name,
