@@ -14,7 +14,7 @@ const removeDiaryProducts = async (req, res) => {
     throw httpError(404, "Not found");
   }
   res.json({
-    message: "Exercise deleted",
+    message: "Products deleted",
   });
 };
 
