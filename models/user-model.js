@@ -30,6 +30,9 @@ const userSchema = new Schema({
     verificationToken: {
         type: String,
     },
+    avatarURL: {
+        type: String
+    }
 }, { versionKey: false, timestamps: true })
 
 userSchema.post('save', handleSaveError);
