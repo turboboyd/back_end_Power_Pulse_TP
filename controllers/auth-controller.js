@@ -52,6 +52,7 @@ const verify = async (req, res) => {
         user: {
             name: user.name,
             email: user.email,
+            verifyToken: user.verify,
             profileSettings: settings,
         },
         token: token
