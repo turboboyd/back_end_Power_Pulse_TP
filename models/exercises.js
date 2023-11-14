@@ -24,4 +24,18 @@ const exerciseSchema = new Schema({
   }
 });
 
+const exerciseСategorySchema = new Schema({
+  filter: {
+    type: String
+  },
+  name: {
+    type: String
+  },
+  imgURL: {
+    type: String
+  },
+});
+
+export const ExerciseСategory = model('exercises-categories', exerciseСategorySchema);
+
 export const Exercise = model('exercise', exerciseSchema);
