@@ -14,7 +14,7 @@ const diaryExerciseSchema = new Schema(
       type: Date,
       required: true,
     },
-    exerciseId: {
+    exercise: {
       type: Schema.Types.ObjectId,
       ref: "exercises",
       required: true,
@@ -38,7 +38,7 @@ const addSchema = Joi.object({
     "date.base": "date must be a valid date",
     "any.required": "date is a required field"
   }),
-  exerciseId: Joi.string()
+  exercise: Joi.string()
   .required()
   .hex()
   .length(24)
