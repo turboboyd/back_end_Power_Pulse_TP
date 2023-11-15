@@ -4,11 +4,10 @@ import { Product } from "../models/products.js";
 
 const addDiaryProducts = async (req, res) => {
   const { _id: owner } = req.user;
-  const { productId } = req.body;
-  const product = await Product.findById(productId);
-  console.log('product', product);
-  const result = await DiaryProduct.create({ ...req.body, owner });
-  res.status(201).json(result);
+  const { product } = req.body;
+  const { id, category, title} = await Product.findById(product);
+  const { amount, calories } = await DiaryProduct.create({ ...req.body, owner });
+  res.status(201).json({ amount, calories, category, title, id });
 };
 
 const removeDiaryProducts = async (req, res) => {

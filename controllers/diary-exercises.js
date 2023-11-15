@@ -1,10 +1,14 @@
 import { DiaryExercise } from "../models/diary-exercises.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
+import { Exercise } from "../models/exercises.js";
 
 const addDiaryExercise = async (req, res) => {
   const { _id: owner } = req.user;
-  const result = await DiaryExercise.create({ ...req.body, owner});
-  res.status(201).json(result);
+  const { exercise } = req.body;
+  const { id, bodyPart, equipment, name, target } = await Exercise.findById(exercise);
+  console.log('bodyPart', bodyPart);
+  const { time, calories } = await DiaryExercise.create({ ...req.body, owner });
+  res.status(201).json({ time, calories, bodyPart, equipment, name, target, id });
 };
 
 const removeDiaryExercise = async (req, res) => {
