@@ -2,9 +2,8 @@ import ctrlWrapper from "./ctrlWrapper.js";
 import httpError from "./HttpError.js";
 
 const bmrCalculation = async (req,res,next) => {
-
+    const { height, currentWeight, birthday, sex, levelActivity } = req.body.profileSettings;
     const activityCoefficients = { 1: 1.2, 2: 1.375, 3: 1.55, 4: 1.725, 5: 1.9 };
-    const { height, currentWeight, birthday, sex, levelActivity } = req.body;
     const today = new Date().getFullYear();
     const userBDay = new Date(birthday).getFullYear();
     const age = today - userBDay;
@@ -22,7 +21,7 @@ const bmrCalculation = async (req,res,next) => {
         throw httpError(400, 'Invalid gender')
     }
 
-    req.body = {...req.body, bmr}
+    req.body.profileSettings = {...req.body.profileSettings, bmr}
     next()
 }
 
