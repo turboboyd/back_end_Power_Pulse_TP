@@ -9,8 +9,8 @@ const listDiary = async (req, res) => {
     return res.status(400).json({ error: "Missing date parameter" });
   }
   const query = { owner, date };
-  const products = await DiaryProduct.find(query);
-  const exercises = await DiaryExercise.find(query);
+  const products = await DiaryProduct.find(query, { amount: 1, calories: 1, _id: 1 });
+  const exercises = await DiaryExercise.find(query, { time: 1, calories: 1, _id: 1 });
   res.json({ products, exercises });
 };
 
