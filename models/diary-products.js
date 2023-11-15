@@ -19,7 +19,7 @@ const diaryProductSchema = new Schema(
       ref: "products",
       required: true,
     },
-    amount: {
+    weight: {
       type: Number,
       min: 1,
       required: true,
@@ -55,7 +55,7 @@ const addSchema = Joi.object({
       "string.length": "product must be a valid ObjectId",
       "any.required": "product is a required field",
     }),
-  amount: Joi.number().required().min(1).messages({
+    weight: Joi.number().required().min(1).messages({
     "number.base": "amount must be a positive number",
     "number.min": "amount must be a positive number",
     "any.required": "amount is a required field",
