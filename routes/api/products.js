@@ -6,6 +6,6 @@ import authenticate from "../../middlewares/authenticate.js";
 const router = Router();
 
 router.get("/", authenticate, ctrl.listProducts);
-// router.get("/blood", authenticate, ctrl.listProductsBlood);
+router.get("/category", authenticate, ctrl.listProductsСategory);
 
 export default router;
