@@ -5,10 +5,12 @@ import { Exercise } from "../models/exercises.js";
 const addDiaryExercise = async (req, res) => {
   const { _id: owner } = req.user;
   const { exercise } = req.body;
+  if (!exercise) {
+    return res.status(400).json({ error: "Missing exercise parameter" });
+  }
   const { id, bodyPart, equipment, name, target } = await Exercise.findById(exercise);
-  console.log('bodyPart', bodyPart);
   const { time, calories } = await DiaryExercise.create({ ...req.body, owner });
-  res.status(201).json({ time, calories, bodyPart, equipment, name, target, id });
+  res.status(201).json({ id, bodyPart,  equipment, name, target, calories, time });
 };
 
 const removeDiaryExercise = async (req, res) => {
