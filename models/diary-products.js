@@ -14,12 +14,12 @@ const diaryProductSchema = new Schema(
       type: Date,
       required: true,
     },
-    productId: {
+    product: {
       type: Schema.Types.ObjectId,
       ref: "products",
       required: true,
     },
-    weight: {
+    amount: {
       type: Number,
       min: 1,
       required: true,
@@ -38,7 +38,7 @@ const addSchema = Joi.object({
     "date.base": "date must be a valid date",
     "any.required": "date is a required field",
   }),
-  productId: Joi.string()
+  product: Joi.string()
     .required()
     .hex()
     .length(24)
@@ -55,7 +55,7 @@ const addSchema = Joi.object({
       "string.length": "product must be a valid ObjectId",
       "any.required": "product is a required field",
     }),
-    weight: Joi.number().required().min(1).messages({
+  amount: Joi.number().required().min(1).messages({
     "number.base": "amount must be a positive number",
     "number.min": "amount must be a positive number",
     "any.required": "amount is a required field",
