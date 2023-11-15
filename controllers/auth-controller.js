@@ -34,6 +34,8 @@ const registration = async (req, res) => {
         user: {
             email: newUser.email,
             name: newUser.name,
+            registrDate: newUser.createdAt,
+            avatarURL: newUser.avatarURL,
             verify: newUser.verify,
         },
     });
@@ -53,6 +55,8 @@ const verify = async (req, res) => {
             name: user.name,
             email: user.email,
             verifyToken: user.verify,
+            registrDate: user.createdAt,
+            avatarURL: user.avatarURL,
             profileSettings: settings,
         },
         token: token
@@ -82,13 +86,12 @@ const resendVerifyEmail = async (req, res) => {
 const authorization = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    if (!user) throw httpError(401, "Email or password invalid");
     const settings = await ProfileSettings.findOne({ owner: user.id }, "-_id -createdAt -updatedAt -owner");
     const passwordCompare = await bcrypt.compare(password, user.password);
+    if (!passwordCompare) throw httpError(401, "Email or password invalid");
     const payload = { id: user._id };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
-
-    if (!user) throw httpError(401, "Email or password invalid");
-    if (!passwordCompare) throw httpError(401, "Email or password invalid");
     if (!user.verify) throw httpError(401, 'Email not verify');
 
     await User.findByIdAndUpdate(user._id, { token });
@@ -97,6 +100,8 @@ const authorization = async (req, res) => {
         user: {
             email: user.email,
             name: user.name,
+            registrDate: user.createdAt,
+            avatarURL: user.avatarURL,
             profile_settings: settings
         },
         token: token,
@@ -104,12 +109,14 @@ const authorization = async (req, res) => {
 }
 
 const getCurrent = async (req, res) => {
-    const { email, name, token, id } = req.user;
+    const { email, name, token, id, createdAt, avatarURL } = req.user;
     const settings = await ProfileSettings.findOne({ owner: id }, "-_id -createdAt -updatedAt -owner");
     res.json({
         user: {
             email: email,
             name: name,
+            registrDate: createdAt,
+            avatarURL: avatarURL,
             profile_settings: settings,
         },
         token: token,

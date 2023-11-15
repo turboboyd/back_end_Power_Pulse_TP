@@ -117,7 +117,7 @@ Status codes:
     "desiredWeight": Number,
     "birthday": Date,
     "blood": Number,
-    "sex": String,
+    "sex": ,
     "levelActivity": Number 
 }
 401 Unauthorized
@@ -129,25 +129,38 @@ PUT: https://power-pulse-dq7h.onrender.com/api/profileSettings/
 Content-Type: application/json
 Body:
 {
-    height: number; minimum 150(cm); required
-    currentWeight: number; minimum 35(kg); required
-    desiredWeight: number; minimum 35(kg); required
-    birthday: date; must be older than 18 years;  required
-    blood: number; allowed values 1, 2, 3, 4; required
-    sex: string; allowed values "male", "female"; required
-    levelActivity: number; allowed values 1, 2, 3, 4, 5; required
+    "name": String,
+    "profileSettings": {
+        "height": Number,
+        "currentWeight": Number,
+        "desiredWeight": Number,
+        "birthday": Date,
+        "blood": Number,
+        "sex": String,
+        "levelActivity": Number
+    }
 }
 
 Status codes:
 200 OK
 {
-    "height": Number,
-    "currentWeight": Number,
-    "desiredWeight": Number,
-    "birthday": Date,
-    "blood": Number,
-    "sex": String,
-    "levelActivity": Number 
+    "user": {
+        "email": String,
+        "name": String,
+        "avatarURL": String,
+        "registrDate": String,
+        "profileSettings": {
+            "height": Number,
+            "currentWeight": Number,
+            "desiredWeight": Number,
+            "birthday": Date,
+            "blood": Number,
+            "sex": String,
+            "levelActivity": Number,
+            "owner": String,
+            "bmr": Number
+        }
+    }
 }
 401 Unauthorized
 400 Bad Request 
