@@ -1,9 +1,13 @@
 import { DiaryProduct } from "../models/diary-products.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
+import { Product } from "../models/products.js";
 
 const addDiaryProducts = async (req, res) => {
   const { _id: owner } = req.user;
-  const result = await DiaryProduct.create({ ...req.body, owner});
+  const { productId } = req.body;
+  const product = await Product.findById(productId);
+  console.log('product', product);
+  const result = await DiaryProduct.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
