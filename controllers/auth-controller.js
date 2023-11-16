@@ -102,7 +102,7 @@ const authorization = async (req, res) => {
             name: user.name,
             registrDate: user.createdAt,
             avatarURL: user.avatarURL,
-            profile_settings: settings
+            profileSettings: settings
         },
         token: token,
     });
@@ -117,7 +117,7 @@ const getCurrent = async (req, res) => {
             name: name,
             registrDate: createdAt,
             avatarURL: avatarURL,
-            profile_settings: settings,
+            profileSettings: settings,
         },
         token: token,
     })
