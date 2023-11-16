@@ -74,7 +74,7 @@ const listDiary = async (req, res) => {
 
   const products = await DiaryProduct.aggregate(diaryProductPipeline);
   const exercises = await DiaryExercise.aggregate(diaryExercisePipeline);
-
+    
   const { blood } = await ProfileSettings.findOne({ owner });
   const processedProducts = products.map(product => ({
     ...product,
@@ -83,8 +83,6 @@ const listDiary = async (req, res) => {
 
   res.json({ products: processedProducts, exercises });
 };
-
-
 
 export default {
   listDiary: ctrlWrapper(listDiary),
