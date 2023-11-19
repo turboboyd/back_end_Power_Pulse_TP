@@ -22,9 +22,7 @@ const removeDiaryProducts = async (req, res) => {
   if (!result) {
     throw httpError(404, "Not found");
   }
-  res.json({
-    message: "Products deleted",
-  });
+  res.json(result);
 };
 
 export default {

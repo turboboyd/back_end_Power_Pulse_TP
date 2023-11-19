@@ -19,9 +19,7 @@ const removeDiaryExercise = async (req, res) => {
   if (!result) {
     throw httpError(404, "Not found");
   }
-  res.json({
-    message: "Exercise deleted",
-  });
+  res.json(result);
 };
 
 export default {
