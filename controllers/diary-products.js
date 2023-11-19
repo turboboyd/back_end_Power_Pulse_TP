@@ -14,7 +14,7 @@ const addDiaryProducts = async (req, res) => {
   const { id, category, title, groupBloodNotAllowed} = await Product.findById(product);
   const recommended = groupBloodNotAllowed[blood];
   const { amount, calories } = await DiaryProduct.create({ ...req.body, owner });
-  res.status(201).json({ id, title, category, calories, amount, recommended });
+  res.status(201).json({ _id: id, title, category, calories, amount, recommended });
 };
 
 const removeDiaryProducts = async (req, res) => {
