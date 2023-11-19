@@ -32,7 +32,7 @@ const registration = async (req, res) => {
 
     const verifyEmail = {
         to: email,
-        subject: 'Verify Email',
+        subject: 'Power Pulse Team <Verify Email request>',
         html: `<a target="_blank" href="http://localhost:3000/verify/${verificationToken}">Click to verify email</a>`
     };
 
@@ -80,7 +80,7 @@ const resendVerifyEmail = async (req, res) => {
 
     const verifyEmail = {
         to: email,
-        subject: 'Verify Email',
+        subject: 'Power Pulse Team <Verify Email request>',
         html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${user.verificationToken}">Click to verify email</a>`
     };
 
@@ -89,6 +89,41 @@ const resendVerifyEmail = async (req, res) => {
     res.json({
         message: 'Verification email sent'
     })
+}
+
+const changePasswordSendMail = async (req, res) => {
+    const { email } = req.body;
+    const verificationToken = nanoid();
+    const findUser = await User.findOneAndUpdate({ email }, { verify: false, verificationToken: verificationToken, token: '' });
+    if (!findUser) throw httpError(404, 'User not found')
+
+    const verifyEmail = {
+        to: email,
+        subject: 'Power Pulse Team <Change password request>',
+        html: `<a target="_blank" href="http://localhost:3000/changePassword/${verificationToken}">Click to verify email</a>`
+    };
+
+    await sendEmail(verifyEmail);
+
+    res.json({
+        message: 'Verification link has been sent on your Email, please check it.'
+    })
+}
+
+const changePassword = async (req, res) => {
+    const { verificationToken } = req.params;
+    const { password } = req.body;
+    const hashPassword = await bcrypt.hash(password, 10);
+    const findUser = await User.findOne({ verificationToken });
+    
+    if(!findUser) throw httpError(404, 'User not found');
+
+    await User.findOneAndUpdate(findUser._id, {verify: true, verificationToken: null, password: hashPassword})
+
+    res.json({
+        message: "Password has been changed, please logged in with new password."
+    })
+
 }
 
 const authorization = async (req, res) => {
@@ -163,6 +198,8 @@ export default {
     registration: ctrlWrapper(registration),
     verify: ctrlWrapper(verify),
     resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
+    changePasswordSendMail: ctrlWrapper(changePasswordSendMail),
+    changePassword: ctrlWrapper(changePassword),
     authorization: ctrlWrapper(authorization),
     logOut: ctrlWrapper(logOut),
     getCurrent: ctrlWrapper(getCurrent),

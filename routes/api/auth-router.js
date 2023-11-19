@@ -15,6 +15,9 @@ authRouter.post('/register', isEmptyBody, userRegistrationValidate, authControll
 authRouter.get('/verify/:verificationToken', authController.verify);
 authRouter.post('/verify', isEmptyBody, userEmailValidate, authController.resendVerifyEmail);
 authRouter.post('/login', isEmptyBody, userAuthorizationValidate, authController.authorization);
+authRouter.post('/changePassword', isEmptyBody, authController.changePasswordSendMail);
+authRouter.patch('/changePassword/:verificationToken',isEmptyBody, authController.changePassword);
+
 authRouter.get('/current', authenticate, authController.getCurrent);
 authRouter.post('/logout', authenticate, authController.logOut);
 authRouter.patch('/avatar', authenticate, upload.single('avatar'), authController.updateAvatar);

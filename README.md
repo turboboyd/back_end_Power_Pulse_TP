@@ -89,6 +89,45 @@ Status codes:
 204 No Content (Succsess)
 401 Unauthorized
 
+## Change password (send email request)
+POST: https://power-pulse-dq7h.onrender.com/api/users/changePassword/
+
+Content-Type: application/json
+Body:
+{
+    "email": string,
+}
+
+
+Respose: 
+200: OK
+{
+    "message": "Verification link has been sent on your Email, please check it."
+}
+При успешном запросе у пользователя появляются следующие изминения:
+1) Снова повявляется verificationToken (который есть в ссылке которую высылают на почту)
+href="http://localhost:3000/changePassword/${verificationToken}"
+2) Accsess Token (token) становиться равный = '' (т.е. мы его разлогиниваем)
+3) Статус Verify становится false (это сделано для того чтобы злоумышленник не смог зайти по новой в аккаунт имея старые данные), Т.е. дальше пользователя можно взломать только взломав его почту ... 
+
+404: User not found
+
+## Change Password 
+PATCH: https://power-pulse-dq7h.onrender.com/api/users/changePassword/:verificationToken
+Content-Type: application/json
+Body:
+{
+    "password": string,
+}
+
+Respose: 
+200: OK
+{
+    "message": "Password has been changed, please logged in with new password."
+}
+404: User not found
+400: Bad Request
+
 # Profile Settings
 
 ## Add Profile settings
