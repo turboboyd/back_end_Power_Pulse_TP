@@ -6,11 +6,19 @@ import sendEmail from "../helpers/sendEmail.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 import gravatar from 'gravatar';
+import fs from 'fs/promises';
 import Jimp from 'jimp';
+import { v2 as cloudinary } from 'cloudinary';
 import 'dotenv/config';
 import { nanoid } from "nanoid";
 
-const { JWT_SECRET, BASE_URL } = process.env;
+const { JWT_SECRET, BASE_URL, CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUNDINARY_API_SECRET } = process.env;
+
+cloudinary.config({
+    cloud_name: CLOUDINARY_CLOUD_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUNDINARY_API_SECRET,
+})
 
 const registration = async (req, res) => {
     const { email, password } = req.body;
@@ -132,6 +140,25 @@ const logOut = async (req, res) => {
     })
 }
 
+const updateAvatar = async (req, res) => {
+    const { _id } = req.user;
+    const { path: avatarTempPath } = req.file;
+
+    try {
+        const result = await cloudinary.uploader.upload(avatarTempPath);
+        await fs.unlink(avatarTempPath);
+        await User.findByIdAndUpdate(_id, { avatarURL: result.secure_url })
+
+        res.json({
+            avatarURL: result.secure_url,
+        });
+    }
+    catch (error) {
+        console.error('Ошибка при загрузке аватарки:', error);
+        res.status(500).json({ error: 'Ошибка при загрузке аватарки' });
+    }
+};
+
 export default {
     registration: ctrlWrapper(registration),
     verify: ctrlWrapper(verify),
@@ -139,4 +166,5 @@ export default {
     authorization: ctrlWrapper(authorization),
     logOut: ctrlWrapper(logOut),
     getCurrent: ctrlWrapper(getCurrent),
+    updateAvatar: ctrlWrapper(updateAvatar),
 }

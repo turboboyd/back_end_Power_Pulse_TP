@@ -2,6 +2,7 @@ import express from 'express';
 import authController from '../../controllers/auth-controller.js';
 import isEmptyBody from '../../middlewares/isEmptyBody.js';
 import authenticate from '../../middlewares/authenticate.js';
+import upload from '../../middlewares/upload.js';
 import validateBodyAuth from '../../helpers/validateBodyAuth.js';
 import { userAuthorizationJoiSchema, userRegistrationJoiSchema, userEmailJoiSchema } from '../../models/user-model.js';
 
@@ -16,5 +17,6 @@ authRouter.post('/verify', isEmptyBody, userEmailValidate, authController.resend
 authRouter.post('/login', isEmptyBody, userAuthorizationValidate, authController.authorization);
 authRouter.get('/current', authenticate, authController.getCurrent);
 authRouter.post('/logout', authenticate, authController.logOut);
+authRouter.patch('/avatar', authenticate, upload.single('avatar'), authController.updateAvatar);
 
 export default authRouter;
