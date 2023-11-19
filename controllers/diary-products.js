@@ -2,6 +2,7 @@ import { DiaryProduct } from "../models/diary-products.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { Product } from "../models/products.js";
 import { ProfileSettings } from "../models/profile-settings-model.js";
+import httpError from "../helpers/HttpError.js";
 
 const addDiaryProducts = async (req, res) => {
   const { _id: owner } = req.user;

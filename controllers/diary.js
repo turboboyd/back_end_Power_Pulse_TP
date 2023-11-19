@@ -77,11 +77,25 @@ const listDiary = async (req, res) => {
     
   const { blood } = await ProfileSettings.findOne({ owner });
   const processedProducts = products.map(product => ({
-    ...product,
+    id: product._id.toString(),
+    amount: product.amount,
+    calories: product.calories,
+    category: product.category,
+    title: product.title,
     recommended: product.recommended[blood],
   }));
 
-  res.json({ products: processedProducts, exercises });
+  const processedExercises = exercises.map(exercise => ({
+    id: exercise._id.toString(),
+    time: exercise.time,
+    calories: exercise.calories,
+    bodyPart: exercise.bodyPart,
+    equipment: exercise.equipment,
+    name: exercise.name,
+    target: exercise.target,
+  }));
+
+  res.json({ products: processedProducts, exercises: processedExercises });
 };
 
 export default {

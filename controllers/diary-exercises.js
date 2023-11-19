@@ -1,6 +1,7 @@
 import { DiaryExercise } from "../models/diary-exercises.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import { Exercise } from "../models/exercises.js";
+import httpError from "../helpers/HttpError.js";
 
 const addDiaryExercise = async (req, res) => {
   const { _id: owner } = req.user;
