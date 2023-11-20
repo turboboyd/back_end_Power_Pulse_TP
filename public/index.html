@@ -1061,19 +1061,25 @@
                     <li data-group="Products" data-name="listProductsСategory" class="">
                       <a href="#api-Products-listProductsСategory">listProductsСategory</a>
                     </li>
-                  <li class="nav-header" data-group="Profile"><a href="#api-Profile">API Methods - Profile</a></li>
-                    <li data-group="Profile" data-name="addPet" class="">
-                      <a href="#api-Profile-addPet">addPet</a>
+                  <li class="nav-header" data-group="ProfileSettings"><a href="#api-ProfileSettings">API Methods - ProfileSettings</a></li>
+                    <li data-group="ProfileSettings" data-name="addProfileSettings" class="">
+                      <a href="#api-ProfileSettings-addProfileSettings">addProfileSettings</a>
                     </li>
-                    <li data-group="Profile" data-name="loginUser" class="">
-                      <a href="#api-Profile-loginUser">loginUser</a>
+                    <li data-group="ProfileSettings" data-name="getProfileSettings" class="">
+                      <a href="#api-ProfileSettings-getProfileSettings">getProfileSettings</a>
                     </li>
-                    <li data-group="Profile" data-name="updatePet" class="">
-                      <a href="#api-Profile-updatePet">updatePet</a>
+                    <li data-group="ProfileSettings" data-name="updateProfileSettings" class="">
+                      <a href="#api-ProfileSettings-updateProfileSettings">updateProfileSettings</a>
                     </li>
                   <li class="nav-header" data-group="User"><a href="#api-User">API Methods - User</a></li>
                     <li data-group="User" data-name="authorization" class="">
                       <a href="#api-User-authorization">authorization</a>
+                    </li>
+                    <li data-group="User" data-name="changePassword" class="">
+                      <a href="#api-User-changePassword">changePassword</a>
+                    </li>
+                    <li data-group="User" data-name="changePasswordSendMail" class="">
+                      <a href="#api-User-changePasswordSendMail">changePasswordSendMail</a>
                     </li>
                     <li data-group="User" data-name="getCurrent" class="">
                       <a href="#api-User-getCurrent">getCurrent</a>
@@ -1086,6 +1092,9 @@
                     </li>
                     <li data-group="User" data-name="resendVerifyEmail" class="">
                       <a href="#api-User-resendVerifyEmail">resendVerifyEmail</a>
+                    </li>
+                    <li data-group="User" data-name="updateAvatar" class="">
+                      <a href="#api-User-updateAvatar">updateAvatar</a>
                     </li>
                     <li data-group="User" data-name="verify" class="">
                       <a href="#api-User-verify">verify</a>
@@ -4604,12 +4613,12 @@ except ApiException as e:
                       </div>
                       <hr>
                   </section>
-                <section id="api-Profile">
-                  <h1>Profile</h1>
-                    <div id="api-Profile-addPet">
-                      <article id="api-Profile-addPet-0" data-group="User" data-name="addPet" data-version="0">
+                <section id="api-ProfileSettings">
+                  <h1>ProfileSettings</h1>
+                    <div id="api-ProfileSettings-addProfileSettings">
+                      <article id="api-ProfileSettings-addProfileSettings-0" data-group="User" data-name="addProfileSettings" data-version="0">
                         <div class="pull-left">
-                          <h1>addPet</h1>
+                          <h1>addProfileSettings</h1>
                           <p>Add a new pet to the store</p>
                         </div>
                         <div class="pull-right"></div>
@@ -4623,78 +4632,82 @@ except ApiException as e:
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Profile-addPet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Profile-addPet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Profile-addPet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Profile-addPet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Profile-addPet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Profile-addPet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Profile-addPet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Profile-addPet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Profile-addPet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Profile-addPet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Profile-addPet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-ProfileSettings-addProfileSettings-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-java">Java</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-addProfileSettings-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Profile-addPet-0-curl">
+                          <div class="tab-pane active" id="examples-ProfileSettings-addProfileSettings-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
--H "Accept: application/json,application/xml"\
--H "Content-Type: application/json,application/xml,application/x-www-form-urlencoded"\
+ -H "Authorization: Bearer [[accessToken]]"\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
 "https://power-pulse-dq7h.onrender.com/api/profileSettings"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Profile-addPet-0-java">
+                          <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
-import io.swagger.client.api.ProfileApi;
+import io.swagger.client.api.ProfileSettingsApi;
 
 import java.io.File;
 import java.util.*;
 
-public class ProfileApiExample {
+public class ProfileSettingsApiExample {
 
     public static void main(String[] args) {
-        
-        ProfileApi apiInstance = new ProfileApi();
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        ProfileSettingsApi apiInstance = new ProfileSettingsApi();
         try {
-            Pet result = apiInstance.addPet();
+            Pet result = apiInstance.addProfileSettings();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ProfileApi#addPet");
+            System.err.println("Exception when calling ProfileSettingsApi#addProfileSettings");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Profile-addPet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ProfileApi;
+                          <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ProfileSettingsApi;
 
-public class ProfileApiExample {
+public class ProfileSettingsApiExample {
 
     public static void main(String[] args) {
-        ProfileApi apiInstance = new ProfileApi();
+        ProfileSettingsApi apiInstance = new ProfileSettingsApi();
         try {
-            Pet result = apiInstance.addPet();
+            Pet result = apiInstance.addProfileSettings();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ProfileApi#addPet");
+            System.err.println("Exception when calling ProfileSettingsApi#addProfileSettings");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Profile-addPet-0-groovy">
+  <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Profile-addPet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-ProfileApi *apiInstance = [[ProfileApi alloc] init];
+                            <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
+ProfileSettingsApi *apiInstance = [[ProfileSettingsApi alloc] init];
 
 // Add a new pet to the store
-[apiInstance addPetWithCompletionHandler: 
+[apiInstance addProfileSettingsWithCompletionHandler: 
               ^(Pet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -4706,10 +4719,12 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-addPet-0-javascript">
+                            <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var PowerPulseApp = require('power_pulse_app');
+var defaultClient = PowerPulseApp.ApiClient.instance;
 
-var api = new PowerPulseApp.ProfileApi()
+
+var api = new PowerPulseApp.ProfileSettingsApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -4717,14 +4732,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.addPet(callback);
+api.addProfileSettings(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Profile-addPet-0-angular">
+                            <!--<div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Profile-addPet-0-csharp">
+                            <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -4733,22 +4748,23 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class addPetExample
+    public class addProfileSettingsExample
     {
         public void main()
         {
 
-            var apiInstance = new ProfileApi();
+
+            var apiInstance = new ProfileSettingsApi();
 
             try
             {
                 // Add a new pet to the store
-                Pet result = apiInstance.addPet();
+                Pet result = apiInstance.addProfileSettings();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling ProfileApi.addPet: " + e.Message );
+                Debug.Print("Exception when calling ProfileSettingsApi.addProfileSettings: " + e.Message );
             }
         }
     }
@@ -4756,53 +4772,56 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-addPet-0-php">
+                            <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Swagger\Client\ApiProfileApi();
+
+$api_instance = new Swagger\Client\ApiProfileSettingsApi();
 
 try {
-    $result = $api_instance->addPet();
+    $result = $api_instance->addProfileSettings();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling ProfileApi->addPet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ProfileSettingsApi->addProfileSettings: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-addPet-0-perl">
+                            <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::ProfileApi;
+use WWW::SwaggerClient::ProfileSettingsApi;
 
-my $api_instance = WWW::SwaggerClient::ProfileApi->new();
+
+my $api_instance = WWW::SwaggerClient::ProfileSettingsApi->new();
 
 eval { 
-    my $result = $api_instance->addPet();
+    my $result = $api_instance->addProfileSettings();
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling ProfileApi->addPet: $@\n";
+    warn "Exception when calling ProfileSettingsApi->addProfileSettings: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-addPet-0-python">
+                            <div class="tab-pane" id="examples-ProfileSettings-addProfileSettings-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
 
+
 # create an instance of the API class
-api_instance = swagger_client.ProfileApi()
+api_instance = swagger_client.ProfileSettingsApi()
 
 try: 
     # Add a new pet to the store
-    api_response = api_instance.add_pet()
+    api_response = api_instance.add_profile_settings()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProfileApi->addPet: %s\n" % e)</code></pre>
+    print("Exception when calling ProfileSettingsApi->addProfileSettings: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -4818,25 +4837,20 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-addPet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-addProfileSettings-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-addPet-200-schema">
-                                  <div id='responses-addPet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-addProfileSettings-200-schema">
+                                  <div id='responses-addProfileSettings-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
   "description" : "Successful operation",
   "content" : {
     "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/Pet"
-      }
-    },
-    "application/xml" : {
       "schema" : {
         "$ref" : "#/components/schemas/Pet"
       }
@@ -4856,14 +4870,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-addPet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-addPet-200-schema-200');
+                                        $('#responses-addProfileSettings-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addProfileSettings-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-addPet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-addProfileSettings-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -4878,10 +4892,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Profile-loginUser">
-                      <article id="api-Profile-loginUser-0" data-group="User" data-name="loginUser" data-version="0">
+                    <div id="api-ProfileSettings-getProfileSettings">
+                      <article id="api-ProfileSettings-getProfileSettings-0" data-group="User" data-name="getProfileSettings" data-version="0">
                         <div class="pull-left">
-                          <h1>loginUser</h1>
+                          <h1>getProfileSettings</h1>
                           <p>Logs user into the system</p>
                         </div>
                         <div class="pull-right"></div>
@@ -4895,83 +4909,87 @@ except ApiException as e:
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Profile-loginUser-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Profile-loginUser-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Profile-loginUser-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Profile-loginUser-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Profile-loginUser-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Profile-loginUser-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Profile-loginUser-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Profile-loginUser-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Profile-loginUser-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Profile-loginUser-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Profile-loginUser-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-ProfileSettings-getProfileSettings-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-java">Java</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-getProfileSettings-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Profile-loginUser-0-curl">
+                          <div class="tab-pane active" id="examples-ProfileSettings-getProfileSettings-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/xml,application/json"\
+ -H "Authorization: Bearer [[accessToken]]"\
+-H "Accept: application/xml"\
 "https://power-pulse-dq7h.onrender.com/api/profileSettings?username=&password="</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Profile-loginUser-0-java">
+                          <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
-import io.swagger.client.api.ProfileApi;
+import io.swagger.client.api.ProfileSettingsApi;
 
 import java.io.File;
 import java.util.*;
 
-public class ProfileApiExample {
+public class ProfileSettingsApiExample {
 
     public static void main(String[] args) {
-        
-        ProfileApi apiInstance = new ProfileApi();
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        ProfileSettingsApi apiInstance = new ProfileSettingsApi();
         String username = username_example; // String | The user name for login
         String password = password_example; // String | The password for login in clear text
         try {
-            'String' result = apiInstance.loginUser(username, password);
+            'String' result = apiInstance.getProfileSettings(username, password);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ProfileApi#loginUser");
+            System.err.println("Exception when calling ProfileSettingsApi#getProfileSettings");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Profile-loginUser-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ProfileApi;
+                          <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ProfileSettingsApi;
 
-public class ProfileApiExample {
+public class ProfileSettingsApiExample {
 
     public static void main(String[] args) {
-        ProfileApi apiInstance = new ProfileApi();
+        ProfileSettingsApi apiInstance = new ProfileSettingsApi();
         String username = username_example; // String | The user name for login
         String password = password_example; // String | The password for login in clear text
         try {
-            'String' result = apiInstance.loginUser(username, password);
+            'String' result = apiInstance.getProfileSettings(username, password);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ProfileApi#loginUser");
+            System.err.println("Exception when calling ProfileSettingsApi#getProfileSettings");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Profile-loginUser-0-groovy">
+  <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Profile-loginUser-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">String *username = username_example; // The user name for login (optional)
+                            <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+String *username = username_example; // The user name for login (optional)
 String *password = password_example; // The password for login in clear text (optional)
 
-ProfileApi *apiInstance = [[ProfileApi alloc] init];
+ProfileSettingsApi *apiInstance = [[ProfileSettingsApi alloc] init];
 
 // Logs user into the system
-[apiInstance loginUserWith:username
+[apiInstance getProfileSettingsWith:username
     password:password
               completionHandler: ^('String' output, NSError* error) {
                             if (output) {
@@ -4984,10 +5002,12 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-loginUser-0-javascript">
+                            <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var PowerPulseApp = require('power_pulse_app');
+var defaultClient = PowerPulseApp.ApiClient.instance;
 
-var api = new PowerPulseApp.ProfileApi()
+
+var api = new PowerPulseApp.ProfileSettingsApi()
 var opts = { 
   'username': username_example, // {{String}} The user name for login
   'password': password_example // {{String}} The password for login in clear text
@@ -4999,14 +5019,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.loginUser(opts, callback);
+api.getProfileSettings(opts, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Profile-loginUser-0-angular">
+                            <!--<div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Profile-loginUser-0-csharp">
+                            <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -5015,24 +5035,25 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class loginUserExample
+    public class getProfileSettingsExample
     {
         public void main()
         {
 
-            var apiInstance = new ProfileApi();
+
+            var apiInstance = new ProfileSettingsApi();
             var username = username_example;  // String | The user name for login (optional) 
             var password = password_example;  // String | The password for login in clear text (optional) 
 
             try
             {
                 // Logs user into the system
-                'String' result = apiInstance.loginUser(username, password);
+                'String' result = apiInstance.getProfileSettings(username, password);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling ProfileApi.loginUser: " + e.Message );
+                Debug.Print("Exception when calling ProfileSettingsApi.getProfileSettings: " + e.Message );
             }
         }
     }
@@ -5040,59 +5061,62 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-loginUser-0-php">
+                            <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Swagger\Client\ApiProfileApi();
+
+$api_instance = new Swagger\Client\ApiProfileSettingsApi();
 $username = username_example; // String | The user name for login
 $password = password_example; // String | The password for login in clear text
 
 try {
-    $result = $api_instance->loginUser($username, $password);
+    $result = $api_instance->getProfileSettings($username, $password);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling ProfileApi->loginUser: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ProfileSettingsApi->getProfileSettings: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-loginUser-0-perl">
+                            <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::ProfileApi;
+use WWW::SwaggerClient::ProfileSettingsApi;
 
-my $api_instance = WWW::SwaggerClient::ProfileApi->new();
+
+my $api_instance = WWW::SwaggerClient::ProfileSettingsApi->new();
 my $username = username_example; # String | The user name for login
 my $password = password_example; # String | The password for login in clear text
 
 eval { 
-    my $result = $api_instance->loginUser(username => $username, password => $password);
+    my $result = $api_instance->getProfileSettings(username => $username, password => $password);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling ProfileApi->loginUser: $@\n";
+    warn "Exception when calling ProfileSettingsApi->getProfileSettings: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-loginUser-0-python">
+                            <div class="tab-pane" id="examples-ProfileSettings-getProfileSettings-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
 
+
 # create an instance of the API class
-api_instance = swagger_client.ProfileApi()
+api_instance = swagger_client.ProfileSettingsApi()
 username = username_example # String | The user name for login (optional)
 password = password_example # String | The password for login in clear text (optional)
 
 try: 
     # Logs user into the system
-    api_response = api_instance.login_user(username=username, password=password)
+    api_response = api_instance.get_profile_settings(username=username, password=password)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProfileApi->loginUser: %s\n" % e)</code></pre>
+    print("Exception when calling ProfileSettingsApi->getProfileSettings: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -5112,7 +5136,7 @@ except ApiException as e:
                                 <td>
                                 
                                 
-                                    <div id="d2e199_loginUser_username">
+                                    <div id="d2e199_getProfileSettings_username">
                                         <div class="json-schema-view">
                                             <div class="primitive">
                                                 <span class="type">
@@ -5131,7 +5155,7 @@ except ApiException as e:
                                 <td>
                                 
                                 
-                                    <div id="d2e199_loginUser_password">
+                                    <div id="d2e199_getProfileSettings_password">
                                         <div class="json-schema-view">
                                             <div class="primitive">
                                                 <span class="type">
@@ -5153,17 +5177,17 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-loginUser-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-getProfileSettings-200-schema">Schema</a>
                                 </li>
 
                                 <li class="">
-                                  <a data-toggle="tab" href="#responses-loginUser-200-headers">Headers</a>
+                                  <a data-toggle="tab" href="#responses-getProfileSettings-200-headers">Headers</a>
                                 </li>
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-loginUser-200-schema">
-                                  <div id='responses-loginUser-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-getProfileSettings-200-schema">
+                                  <div id='responses-getProfileSettings-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -5194,11 +5218,6 @@ except ApiException as e:
         "type" : "string",
         "x-content-type" : "application/xml"
       }
-    },
-    "application/json" : {
-      "schema" : {
-        "type" : "string"
-      }
     }
   }
 };
@@ -5215,16 +5234,16 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-loginUser-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-loginUser-200-schema-200');
+                                        $('#responses-getProfileSettings-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getProfileSettings-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-loginUser-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-getProfileSettings-200-schema-data' type='hidden' value=''></input>
                                 </div>
-                                <div class="tab-pane" id="responses-loginUser-200-headers">
+                                <div class="tab-pane" id="responses-getProfileSettings-200-headers">
                                     <table>
                                         <tr>
                                             <th width="150px">Name</th>
@@ -5259,10 +5278,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Profile-updatePet">
-                      <article id="api-Profile-updatePet-0" data-group="User" data-name="updatePet" data-version="0">
+                    <div id="api-ProfileSettings-updateProfileSettings">
+                      <article id="api-ProfileSettings-updateProfileSettings-0" data-group="User" data-name="updateProfileSettings" data-version="0">
                         <div class="pull-left">
-                          <h1>updatePet</h1>
+                          <h1>updateProfileSettings</h1>
                           <p>Update an existing pet</p>
                         </div>
                         <div class="pull-right"></div>
@@ -5276,78 +5295,82 @@ except ApiException as e:
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Profile-updatePet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Profile-updatePet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Profile-updatePet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Profile-updatePet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Profile-updatePet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Profile-updatePet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Profile-updatePet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Profile-updatePet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Profile-updatePet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Profile-updatePet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Profile-updatePet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-ProfileSettings-updateProfileSettings-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-java">Java</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-ProfileSettings-updateProfileSettings-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Profile-updatePet-0-curl">
+                          <div class="tab-pane active" id="examples-ProfileSettings-updateProfileSettings-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+ -H "Authorization: Bearer [[accessToken]]"\
 -H "Accept: application/json"\
 -H "Content-Type: application/json"\
 "https://power-pulse-dq7h.onrender.com/api/profileSettings"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Profile-updatePet-0-java">
+                          <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
-import io.swagger.client.api.ProfileApi;
+import io.swagger.client.api.ProfileSettingsApi;
 
 import java.io.File;
 import java.util.*;
 
-public class ProfileApiExample {
+public class ProfileSettingsApiExample {
 
     public static void main(String[] args) {
-        
-        ProfileApi apiInstance = new ProfileApi();
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        ProfileSettingsApi apiInstance = new ProfileSettingsApi();
         try {
-            Pet result = apiInstance.updatePet();
+            Pet result = apiInstance.updateProfileSettings();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ProfileApi#updatePet");
+            System.err.println("Exception when calling ProfileSettingsApi#updateProfileSettings");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Profile-updatePet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ProfileApi;
+                          <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.ProfileSettingsApi;
 
-public class ProfileApiExample {
+public class ProfileSettingsApiExample {
 
     public static void main(String[] args) {
-        ProfileApi apiInstance = new ProfileApi();
+        ProfileSettingsApi apiInstance = new ProfileSettingsApi();
         try {
-            Pet result = apiInstance.updatePet();
+            Pet result = apiInstance.updateProfileSettings();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ProfileApi#updatePet");
+            System.err.println("Exception when calling ProfileSettingsApi#updateProfileSettings");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Profile-updatePet-0-groovy">
+  <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Profile-updatePet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-ProfileApi *apiInstance = [[ProfileApi alloc] init];
+                            <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
+ProfileSettingsApi *apiInstance = [[ProfileSettingsApi alloc] init];
 
 // Update an existing pet
-[apiInstance updatePetWithCompletionHandler: 
+[apiInstance updateProfileSettingsWithCompletionHandler: 
               ^(Pet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -5359,10 +5382,12 @@ ProfileApi *apiInstance = [[ProfileApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-updatePet-0-javascript">
+                            <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var PowerPulseApp = require('power_pulse_app');
+var defaultClient = PowerPulseApp.ApiClient.instance;
 
-var api = new PowerPulseApp.ProfileApi()
+
+var api = new PowerPulseApp.ProfileSettingsApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5370,14 +5395,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updatePet(callback);
+api.updateProfileSettings(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Profile-updatePet-0-angular">
+                            <!--<div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Profile-updatePet-0-csharp">
+                            <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -5386,22 +5411,23 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class updatePetExample
+    public class updateProfileSettingsExample
     {
         public void main()
         {
 
-            var apiInstance = new ProfileApi();
+
+            var apiInstance = new ProfileSettingsApi();
 
             try
             {
                 // Update an existing pet
-                Pet result = apiInstance.updatePet();
+                Pet result = apiInstance.updateProfileSettings();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling ProfileApi.updatePet: " + e.Message );
+                Debug.Print("Exception when calling ProfileSettingsApi.updateProfileSettings: " + e.Message );
             }
         }
     }
@@ -5409,53 +5435,56 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-updatePet-0-php">
+                            <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new Swagger\Client\ApiProfileApi();
+
+$api_instance = new Swagger\Client\ApiProfileSettingsApi();
 
 try {
-    $result = $api_instance->updatePet();
+    $result = $api_instance->updateProfileSettings();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling ProfileApi->updatePet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling ProfileSettingsApi->updateProfileSettings: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-updatePet-0-perl">
+                            <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::ProfileApi;
+use WWW::SwaggerClient::ProfileSettingsApi;
 
-my $api_instance = WWW::SwaggerClient::ProfileApi->new();
+
+my $api_instance = WWW::SwaggerClient::ProfileSettingsApi->new();
 
 eval { 
-    my $result = $api_instance->updatePet();
+    my $result = $api_instance->updateProfileSettings();
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling ProfileApi->updatePet: $@\n";
+    warn "Exception when calling ProfileSettingsApi->updateProfileSettings: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Profile-updatePet-0-python">
+                            <div class="tab-pane" id="examples-ProfileSettings-updateProfileSettings-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
 
+
 # create an instance of the API class
-api_instance = swagger_client.ProfileApi()
+api_instance = swagger_client.ProfileSettingsApi()
 
 try: 
     # Update an existing pet
-    api_response = api_instance.update_pet()
+    api_response = api_instance.update_profile_settings()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ProfileApi->updatePet: %s\n" % e)</code></pre>
+    print("Exception when calling ProfileSettingsApi->updateProfileSettings: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -5471,14 +5500,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-updatePet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-updateProfileSettings-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-updatePet-200-schema">
-                                  <div id='responses-updatePet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-updateProfileSettings-200-schema">
+                                  <div id='responses-updateProfileSettings-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -5504,14 +5533,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-updatePet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-updatePet-200-schema-200');
+                                        $('#responses-updateProfileSettings-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateProfileSettings-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-updatePet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-updateProfileSettings-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -5900,16 +5929,667 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-User-getCurrent">
-                      <article id="api-User-getCurrent-0" data-group="User" data-name="getCurrent" data-version="0">
+                    <div id="api-User-changePassword">
+                      <article id="api-User-changePassword-0" data-group="User" data-name="changePassword" data-version="0">
                         <div class="pull-left">
-                          <h1>getCurrent</h1>
-                          <p>Logs user into the system</p>
+                          <h1>changePassword</h1>
+                          <p>User login</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked"></p>
+                        <p class="marked">Only a registered user can do this</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/user/changePassword/{verificationToken}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-User-changePassword-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-User-changePassword-0-java">Java</a></li>
+                          <li class=""><a href="#examples-User-changePassword-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-User-changePassword-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-User-changePassword-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-User-changePassword-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-User-changePassword-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-User-changePassword-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-User-changePassword-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-User-changePassword-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-User-changePassword-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-User-changePassword-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+"https://power-pulse-dq7h.onrender.com/api/user/changePassword/{verificationToken}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-User-changePassword-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.UserApi;
+
+import java.io.File;
+import java.util.*;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        
+        UserApi apiInstance = new UserApi();
+        String verificationToken = verificationToken_example; // String | Token of the order that needs to be deleted
+        try {
+            loginResponses result = apiInstance.changePassword(verificationToken);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#changePassword");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-User-changePassword-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.UserApi;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        UserApi apiInstance = new UserApi();
+        String verificationToken = verificationToken_example; // String | Token of the order that needs to be deleted
+        try {
+            loginResponses result = apiInstance.changePassword(verificationToken);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#changePassword");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-User-changePassword-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-User-changePassword-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *verificationToken = verificationToken_example; // Token of the order that needs to be deleted
+
+UserApi *apiInstance = [[UserApi alloc] init];
+
+// User login
+[apiInstance changePasswordWith:verificationToken
+              completionHandler: ^(loginResponses output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePassword-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var PowerPulseApp = require('power_pulse_app');
+
+var api = new PowerPulseApp.UserApi()
+var verificationToken = verificationToken_example; // {{String}} Token of the order that needs to be deleted
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.changePassword(verificationToken, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-User-changePassword-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-User-changePassword-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class changePasswordExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new UserApi();
+            var verificationToken = verificationToken_example;  // String | Token of the order that needs to be deleted
+
+            try
+            {
+                // User login
+                loginResponses result = apiInstance.changePassword(verificationToken);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling UserApi.changePassword: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePassword-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiUserApi();
+$verificationToken = verificationToken_example; // String | Token of the order that needs to be deleted
+
+try {
+    $result = $api_instance->changePassword($verificationToken);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UserApi->changePassword: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePassword-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::UserApi;
+
+my $api_instance = WWW::SwaggerClient::UserApi->new();
+my $verificationToken = verificationToken_example; # String | Token of the order that needs to be deleted
+
+eval { 
+    my $result = $api_instance->changePassword(verificationToken => $verificationToken);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling UserApi->changePassword: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePassword-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.UserApi()
+verificationToken = verificationToken_example # String | Token of the order that needs to be deleted
+
+try: 
+    # User login
+    api_response = api_instance.change_password(verificationToken)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling UserApi->changePassword: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">verificationToken*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_changePassword_verificationToken">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Token of the order that needs to be deleted
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Created </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-changePassword-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-changePassword-200-schema">
+                                  <div id='responses-changePassword-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Created",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/loginResponses"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-changePassword-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-changePassword-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-changePassword-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Bad Request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-changePassword-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-changePassword-400-schema">
+                                  <div id='responses-changePassword-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Bad Request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/errorUnauthorized"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-changePassword-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-changePassword-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-changePassword-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-User-changePasswordSendMail">
+                      <article id="api-User-changePasswordSendMail-0" data-group="User" data-name="changePasswordSendMail" data-version="0">
+                        <div class="pull-left">
+                          <h1>changePasswordSendMail</h1>
+                          <p>User login</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Only a registered user can do this</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/user/changePassword</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-User-changePasswordSendMail-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-java">Java</a></li>
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-User-changePasswordSendMail-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-User-changePasswordSendMail-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-User-changePasswordSendMail-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-User-changePasswordSendMail-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://power-pulse-dq7h.onrender.com/api/user/changePassword"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-User-changePasswordSendMail-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.UserApi;
+
+import java.io.File;
+import java.util.*;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        
+        UserApi apiInstance = new UserApi();
+        try {
+            loginResponses result = apiInstance.changePasswordSendMail();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#changePasswordSendMail");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-User-changePasswordSendMail-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.UserApi;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        UserApi apiInstance = new UserApi();
+        try {
+            loginResponses result = apiInstance.changePasswordSendMail();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#changePasswordSendMail");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-User-changePasswordSendMail-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-User-changePasswordSendMail-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+UserApi *apiInstance = [[UserApi alloc] init];
+
+// User login
+[apiInstance changePasswordSendMailWithCompletionHandler: 
+              ^(loginResponses output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePasswordSendMail-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var PowerPulseApp = require('power_pulse_app');
+
+var api = new PowerPulseApp.UserApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.changePasswordSendMail(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-User-changePasswordSendMail-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-User-changePasswordSendMail-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class changePasswordSendMailExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new UserApi();
+
+            try
+            {
+                // User login
+                loginResponses result = apiInstance.changePasswordSendMail();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling UserApi.changePasswordSendMail: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePasswordSendMail-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiUserApi();
+
+try {
+    $result = $api_instance->changePasswordSendMail();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UserApi->changePasswordSendMail: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePasswordSendMail-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::UserApi;
+
+my $api_instance = WWW::SwaggerClient::UserApi->new();
+
+eval { 
+    my $result = $api_instance->changePasswordSendMail();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling UserApi->changePasswordSendMail: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-changePasswordSendMail-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.UserApi()
+
+try: 
+    # User login
+    api_response = api_instance.change_password_send_mail()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling UserApi->changePasswordSendMail: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Created </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-changePasswordSendMail-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-changePasswordSendMail-200-schema">
+                                  <div id='responses-changePasswordSendMail-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Created",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/loginResponses"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-changePasswordSendMail-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-changePasswordSendMail-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-changePasswordSendMail-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Bad Request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-changePasswordSendMail-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-changePasswordSendMail-400-schema">
+                                  <div id='responses-changePasswordSendMail-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Bad Request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/errorUnauthorized"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-changePasswordSendMail-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-changePasswordSendMail-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-changePasswordSendMail-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-User-getCurrent">
+                      <article id="api-User-getCurrent-0" data-group="User" data-name="getCurrent" data-version="0">
+                        <div class="pull-left">
+                          <h1>getCurrent</h1>
+                          <p>Information about the current user</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Getting information about the current authorized user</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/user/current</span></code></pre>
@@ -5990,7 +6670,7 @@ public class UserApiExample {
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
-// Logs user into the system
+// Information about the current user
 [apiInstance getCurrentWithCompletionHandler: 
               ^(currentResponses output, NSError* error) {
                             if (output) {
@@ -6042,7 +6722,7 @@ namespace Example
 
             try
             {
-                // Logs user into the system
+                // Information about the current user
                 currentResponses result = apiInstance.getCurrent();
                 Debug.WriteLine(result);
             }
@@ -6101,7 +6781,7 @@ from pprint import pprint
 api_instance = swagger_client.UserApi()
 
 try: 
-    # Logs user into the system
+    # Information about the current user
     api_response = api_instance.get_current()
     pprint(api_response)
 except ApiException as e:
@@ -6117,7 +6797,7 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 200 - Created </h3>
+                            <h3> Status: 200 - Successful operation </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
@@ -6132,7 +6812,7 @@ except ApiException as e:
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Created",
+  "description" : "Successful operation",
   "content" : {
     "application/json" : {
       "schema" : {
@@ -6165,22 +6845,22 @@ except ApiException as e:
                                 </div>
                             </div>
 
-                            <h3> Status: 400 - Bad Request </h3>
+                            <h3> Status: 401 - Unauthorized </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-getCurrent-400-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-getCurrent-401-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-getCurrent-400-schema">
-                                  <div id='responses-getCurrent-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-getCurrent-401-schema">
+                                  <div id='responses-getCurrent-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Bad Request",
+  "description" : "Unauthorized",
   "content" : {
     "application/json" : {
       "schema" : {
@@ -6202,14 +6882,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getCurrent-400-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getCurrent-400-schema-400');
+                                        $('#responses-getCurrent-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getCurrent-401-schema-401');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-getCurrent-400-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-getCurrent-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -6220,12 +6900,12 @@ except ApiException as e:
                       <article id="api-User-logOut-0" data-group="User" data-name="logOut" data-version="0">
                         <div class="pull-left">
                           <h1>logOut</h1>
-                          <p>Create user</p>
+                          <p>User exit</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">This can only be done by the logged in user.</p>
+                        <p class="marked">Logout of an authorized user</p>
                         <p></p>
                         <br />
                         <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/user/logout</span></code></pre>
@@ -6249,8 +6929,8 @@ except ApiException as e:
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-logOut-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+ -H "Authorization: Bearer [[accessToken]]"\
 -H "Accept: application/json"\
--H "Content-Type: application/json"\
 "https://power-pulse-dq7h.onrender.com/api/user/logout"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-logOut-0-java">
@@ -6265,11 +6945,12 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
         UserApi apiInstance = new UserApi();
         try {
-            User result = apiInstance.logOut();
-            System.out.println(result);
+            apiInstance.logOut();
         } catch (ApiException e) {
             System.err.println("Exception when calling UserApi#logOut");
             e.printStackTrace();
@@ -6286,8 +6967,7 @@ public class UserApiExample {
     public static void main(String[] args) {
         UserApi apiInstance = new UserApi();
         try {
-            User result = apiInstance.logOut();
-            System.out.println(result);
+            apiInstance.logOut();
         } catch (ApiException e) {
             System.err.println("Exception when calling UserApi#logOut");
             e.printStackTrace();
@@ -6300,15 +6980,13 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-logOut-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
 UserApi *apiInstance = [[UserApi alloc] init];
 
-// Create user
+// User exit
 [apiInstance logOutWithCompletionHandler: 
-              ^(User output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
+              ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -6318,13 +6996,15 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-logOut-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var PowerPulseApp = require('power_pulse_app');
+var defaultClient = PowerPulseApp.ApiClient.instance;
+
 
 var api = new PowerPulseApp.UserApi()
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 api.logOut(callback);
@@ -6348,13 +7028,13 @@ namespace Example
         public void main()
         {
 
+
             var apiInstance = new UserApi();
 
             try
             {
-                // Create user
-                User result = apiInstance.logOut();
-                Debug.WriteLine(result);
+                // User exit
+                apiInstance.logOut();
             }
             catch (Exception e)
             {
@@ -6370,11 +7050,11 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
+
 $api_instance = new Swagger\Client\ApiUserApi();
 
 try {
-    $result = $api_instance->logOut();
-    print_r($result);
+    $api_instance->logOut();
 } catch (Exception $e) {
     echo 'Exception when calling UserApi->logOut: ', $e->getMessage(), PHP_EOL;
 }
@@ -6386,11 +7066,11 @@ try {
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
 
+
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 
 eval { 
-    my $result = $api_instance->logOut();
-    print Dumper($result);
+    $api_instance->logOut();
 };
 if ($@) {
     warn "Exception when calling UserApi->logOut: $@\n";
@@ -6404,13 +7084,13 @@ import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
 
+
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
 
 try: 
-    # Create user
-    api_response = api_instance.log_out()
-    pprint(api_response)
+    # User exit
+    api_instance.log_out()
 except ApiException as e:
     print("Exception when calling UserApi->logOut: %s\n" % e)</code></pre>
                             </div>
@@ -6424,26 +7104,34 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: default - successful operation </h3>
+                            <h3> Status: 200 - Successful operation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 401 - Unauthorized </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-logOut-default-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-logOut-401-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-logOut-default-schema">
-                                  <div id='responses-logOut-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-logOut-401-schema">
+                                  <div id='responses-logOut-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "successful operation",
+  "description" : "Unauthorized",
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/User"
+        "$ref" : "#/components/schemas/errorUnauthorized"
       }
     }
   }
@@ -6461,14 +7149,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-logOut-default-schema-data').val(stringify(schema));
-                                        var result = $('#responses-logOut-default-schema-default');
+                                        $('#responses-logOut-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-logOut-401-schema-401');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-logOut-default-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-logOut-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -7179,6 +7867,273 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-resendVerifyEmail-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-User-updateAvatar">
+                      <article id="api-User-updateAvatar-0" data-group="User" data-name="updateAvatar" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateAvatar</h1>
+                          <p>Uploading an avatar</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Uploading an avatar of an authorized user</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/user/avatar</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-User-updateAvatar-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-User-updateAvatar-0-java">Java</a></li>
+                          <li class=""><a href="#examples-User-updateAvatar-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-User-updateAvatar-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-User-updateAvatar-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-User-updateAvatar-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-User-updateAvatar-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-User-updateAvatar-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-User-updateAvatar-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-User-updateAvatar-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-User-updateAvatar-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-User-updateAvatar-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+ -H "Authorization: Bearer [[accessToken]]"\
+-H "Accept: application/json"\
+"https://power-pulse-dq7h.onrender.com/api/user/avatar"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-User-updateAvatar-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.UserApi;
+
+import java.io.File;
+import java.util.*;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        UserApi apiInstance = new UserApi();
+        try {
+            apiInstance.updateAvatar();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#updateAvatar");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-User-updateAvatar-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.UserApi;
+
+public class UserApiExample {
+
+    public static void main(String[] args) {
+        UserApi apiInstance = new UserApi();
+        try {
+            apiInstance.updateAvatar();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UserApi#updateAvatar");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-User-updateAvatar-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-User-updateAvatar-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
+UserApi *apiInstance = [[UserApi alloc] init];
+
+// Uploading an avatar
+[apiInstance updateAvatarWithCompletionHandler: 
+              ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-updateAvatar-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var PowerPulseApp = require('power_pulse_app');
+var defaultClient = PowerPulseApp.ApiClient.instance;
+
+
+var api = new PowerPulseApp.UserApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.updateAvatar(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-User-updateAvatar-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-User-updateAvatar-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateAvatarExample
+    {
+        public void main()
+        {
+
+
+            var apiInstance = new UserApi();
+
+            try
+            {
+                // Uploading an avatar
+                apiInstance.updateAvatar();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling UserApi.updateAvatar: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-updateAvatar-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+$api_instance = new Swagger\Client\ApiUserApi();
+
+try {
+    $api_instance->updateAvatar();
+} catch (Exception $e) {
+    echo 'Exception when calling UserApi->updateAvatar: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-updateAvatar-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::UserApi;
+
+
+my $api_instance = WWW::SwaggerClient::UserApi->new();
+
+eval { 
+    $api_instance->updateAvatar();
+};
+if ($@) {
+    warn "Exception when calling UserApi->updateAvatar: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-User-updateAvatar-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+
+# create an instance of the API class
+api_instance = swagger_client.UserApi()
+
+try: 
+    # Uploading an avatar
+    api_instance.update_avatar()
+except ApiException as e:
+    print("Exception when calling UserApi->updateAvatar: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Successful operation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 401 - Unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateAvatar-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateAvatar-401-schema">
+                                  <div id='responses-updateAvatar-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Unauthorized",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/errorUnauthorized"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateAvatar-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateAvatar-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateAvatar-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
