@@ -129,7 +129,7 @@ Respose:
 400: Bad Request
 
 ## Change Avatar
-PATCH: https://power-pulse-dq7h.onrender.com/api/users/avatar
+PATCH: https://power-pulse-dq7h.onrender.com/api/users/avatar   
 
 Content-Type: multipart/form-data;
 Authorization: Bearer Token
