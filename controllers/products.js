@@ -16,9 +16,8 @@ const listProducts = async (req, res) => {
 
   const totalRecords = await Product.countDocuments(query);
   const result = await Product.find(query, null, { skip, limit });
-
-  res.setHeader("X-Total-Count", totalRecords);
-  res.json(result);
+  const response = { totalRecords, data: result, };
+  res.json(response);
 };
 
 const listProductsСategory = async (req, res) => {

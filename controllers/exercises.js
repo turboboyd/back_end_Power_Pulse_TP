@@ -7,8 +7,8 @@ const listExercisesTypes = async (req, res) => {
   const query = { filter: { $regex: type, $options: "i" } };
   const totalRecords = await ExerciseСategory.countDocuments(query);
   const result = await ExerciseСategory.find(query, null, { skip, limit });
-  res.setHeader('X-Total-Count', totalRecords);
-  res.json(result);
+  const response = { totalRecords, data: result, };
+  res.json(response);
 };
 
 const listExercises = async (req, res) => {
@@ -26,9 +26,8 @@ const listExercises = async (req, res) => {
   const skip = (page - 1) * limit;
   const totalRecords = await Exercise.countDocuments(query);
   const result = await Exercise.find(query, null, { skip, limit });
-  
-  res.setHeader('X-Total-Count', totalRecords);
-  res.json(result);
+  const response = { totalRecords, data: result, };
+  res.json(response);
 };
 
 
