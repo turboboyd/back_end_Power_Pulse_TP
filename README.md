@@ -222,3 +222,16 @@ Status codes:
     "levelActivity": Number 
 }
 401 Unauthorized
+
+## Get App Statistics
+GET: https://power-pulse-dq7h.onrender.com/api/statistics/
+
+Status codes:
+200 OK
+{
+    "exercisesVideos": Number,       Все видео что есть у нас в приложении.
+    "usersCount": Number,            Все пользователи что зарегистрированны.
+    "exercisesDone": Number,         Кол-во упражнений которые сделали все пользователи.
+    "allBurnedColories": Number,     Кол-во каллорий что сожгли все пользователи.
+    "generalTimeSpend": Number       Кол-во времени которое провели все пользователи на тренировках.
+}

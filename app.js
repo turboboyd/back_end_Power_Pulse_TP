@@ -6,6 +6,7 @@ import profileSetingsRouter from './routes/api/profile-settings-router.js';
 import exercisesRouter from './routes/api/exercises.js';
 import productsRouter from './routes/api/products.js';
 import diaryRouter from './routes/api/diary.js';
+import statisticsRouter from './routes/api/statistics-router.js';
 import swaggerUi from 'swagger-ui-express';
 import * as fs from 'fs'
 
@@ -24,8 +25,6 @@ app.use('/api/profileSettings', profileSetingsRouter);
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/diary', diaryRouter);
-
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found' })
