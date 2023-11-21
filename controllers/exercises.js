@@ -23,10 +23,10 @@ const listExercises = async (req, res) => {
       { target: categoryRegex },
     ],
   };
-
   const skip = (page - 1) * limit;
   const totalRecords = await Exercise.countDocuments(query);
   const result = await Exercise.find(query, null, { skip, limit });
+  
   res.setHeader('X-Total-Count', totalRecords);
   res.json(result);
 };

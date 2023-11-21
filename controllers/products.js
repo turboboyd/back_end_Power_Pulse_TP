@@ -6,32 +6,18 @@ const listProducts = async (req, res) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 20, search, category, recommended } = req.query;
   const skip = (page - 1) * limit;
-  let query = [];
-  
-  if (search) {
-    query.push({ title: { $regex: search, $options: "i" } });
-  }
+  const { blood } = await ProfileSettings.findOne({ owner });
+  let query = {};
 
-  if (category) {
-    query.push({ category: { $regex: category, $options: "i" } });
-  }
-
-  if (recommended) {
-    const { blood } = await ProfileSettings.findOne({ owner });
-    const key = `groupBloodNotAllowed.${blood}`;
-    query.push({ [key]: recommended });
-  }
-
-  if (query.length === 0) {
-    query = {};
-  } else {
-    query = { $and: query };
-  }
+  search && (query.title = { $regex: search, $options: "i" });
+  category && (query.category = { $regex: category, $options: "i" });
+  recommended && (query[`groupBloodNotAllowed.${blood}`] = recommended);
+  query = Object.keys(query).length === 0 ? {} : { $and: [query] };
 
   const totalRecords = await Product.countDocuments(query);
   const result = await Product.find(query, null, { skip, limit });
 
-  res.setHeader('X-Total-Count', totalRecords);
+  res.setHeader("X-Total-Count", totalRecords);
   res.json(result);
 };
 
