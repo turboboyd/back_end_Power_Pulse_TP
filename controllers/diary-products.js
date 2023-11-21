@@ -18,12 +18,17 @@ const addDiaryProducts = async (req, res) => {
 };
 
 const removeDiaryProducts = async (req, res) => {
+  const { _id: owner } = req.user;
   const { id } = req.params;
-  const result = await DiaryProduct.findByIdAndRemove(id);
-  if (!result) {
-    throw httpError(404, "Not found");
-  }
-  res.json(result);
+    const diaryProduct = await DiaryProduct.findById(id);
+    if (!diaryProduct) {
+      throw httpError(404, "Not found");
+    }
+    if (diaryProduct.owner.toString() !== owner.toString()) {
+      throw httpError(403, "You do not have permission to delete this resource");
+    }
+    const result = await DiaryProduct.findByIdAndRemove(id);
+    res.json(result);
 };
 
 export default {

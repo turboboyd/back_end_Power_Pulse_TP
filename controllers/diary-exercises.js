@@ -15,13 +15,19 @@ const addDiaryExercise = async (req, res) => {
 };
 
 const removeDiaryExercise = async (req, res) => {
+  const { _id: owner } = req.user;
   const { id } = req.params;
-  const result = await DiaryExercise.findByIdAndRemove(id);
-  if (!result) {
-    throw httpError(404, "Not found");
-  }
-  res.json(result);
+    const diaryExercise = await DiaryExercise.findById(id);
+    if (!diaryExercise) {
+      throw httpError(404, "Not found");
+    }
+    if (diaryExercise.owner.toString() !== owner.toString()) {
+      throw httpError(403, "You do not have permission to delete this resource");
+    }
+    const result = await DiaryExercise.findByIdAndRemove(id);
+    res.json(result);
 };
+
 
 export default {
   addDiaryExercise: ctrlWrapper(addDiaryExercise),
