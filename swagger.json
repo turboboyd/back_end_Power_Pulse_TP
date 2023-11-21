@@ -1,0 +1,1531 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "Power Pulse App",
+    "description" : "This API is for daily training and diet.",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://power-pulse-dq7h.onrender.com/api"
+  } ],
+  "tags" : [ {
+    "name" : "user",
+    "description" : "Operations about user"
+  }, {
+    "name" : "profileSettings",
+    "description" : "Operations about profile"
+  }, {
+    "name" : "exercises",
+    "description" : "Operations about exercises"
+  }, {
+    "name" : "products",
+    "description" : "Operations about products"
+  }, {
+    "name" : "diary",
+    "description" : "Operations about diary"
+  } ],
+  "paths" : {
+    "/user/register" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Create user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "registration",
+        "requestBody" : {
+          "description" : "Created user object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/requestBodies/registerRequestBodies"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/registerResponses"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Conflict (Email in use)",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorInvalidId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/verify/{verificationToken}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Verification token",
+        "description" : "Send verification token",
+        "operationId" : "verify",
+        "parameters" : [ {
+          "name" : "verificationToken",
+          "in" : "path",
+          "description" : "Token of the order that needs to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "PCU17YafeNUFUx4iQeWoy"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/verifyTokenResponses"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/verify" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Resend verification link on email",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "resendVerifyEmail",
+        "requestBody" : {
+          "description" : "Resend email",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/requestBodies/verifyRequestBodies"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/verifyResponses"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request (Verification has already been passed)",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found (User not found)",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorInvalidId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "User login",
+        "description" : "Only a registered user can do this",
+        "operationId" : "authorization",
+        "requestBody" : {
+          "description" : "Created user object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/requestBodies/loginRequestBodies"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/loginResponses"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized (Email not verify)",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorInvalidId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/changePassword" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Password change",
+        "description" : "Changing the password of a registered user",
+        "operationId" : "changePasswordSendMail",
+        "requestBody" : {
+          "description" : "Created user object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/requestBodies/changePasswordBodies"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/changePasswordResponses"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/changePassword/{verificationToken}" : {
+      "patch" : {
+        "tags" : [ "user" ],
+        "summary" : "Verification token",
+        "description" : "Only a registered user can do this",
+        "operationId" : "changePassword",
+        "parameters" : [ {
+          "name" : "verificationToken",
+          "in" : "path",
+          "description" : "Token of the order that needs to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "PCU17YafeNUFUx4iQeWoy"
+        } ],
+        "requestBody" : {
+          "description" : "A new password is sent",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/requestBodies/changePasswordTokenBodies"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/loginResponses"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/logout" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "User exit",
+        "description" : "Logout of an authorized user",
+        "operationId" : "logOut",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "schema" : {
+              "type" : null
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/user/current" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Information about the current user",
+        "description" : "Getting information about the current authorized user",
+        "operationId" : "getCurrent",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/currentResponses"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/user/avatar" : {
+      "patch" : {
+        "tags" : [ "user" ],
+        "summary" : "Uploading an avatar",
+        "description" : "Uploading an avatar of an authorized user",
+        "operationId" : "updateAvatar",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/profileSettings" : {
+      "get" : {
+        "tags" : [ "profileSettings" ],
+        "summary" : "Logs user into the system",
+        "description" : "",
+        "operationId" : "getProfileSettings",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "description" : "The user name for login",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "description" : "The password for login in clear text",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "headers" : {
+              "X-Rate-Limit" : {
+                "description" : "calls per hour allowed by the user",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              },
+              "X-Expires-After" : {
+                "description" : "date in UTC when token expires",
+                "schema" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                }
+              }
+            },
+            "content" : {
+              "application/xml" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid username/password supplied"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "profileSettings" ],
+        "summary" : "Update an existing pet",
+        "description" : "Update an existing pet by Id",
+        "operationId" : "updateProfileSettings",
+        "requestBody" : {
+          "description" : "Update an existent pet in the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Pet not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "profileSettings" ],
+        "summary" : "Add a new pet to the store",
+        "description" : "Add a new pet to the store",
+        "operationId" : "addProfileSettings",
+        "requestBody" : {
+          "description" : "Create a new pet in the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/exercises" : {
+      "get" : {
+        "tags" : [ "exercises" ],
+        "summary" : "Returns all exercises",
+        "description" : "Returns 20 values ​​each",
+        "operationId" : "listExercises",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page number",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Number of items per page",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "id",
+          "in" : "query",
+          "description" : "Subcategory ID",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/exercise"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/exercises/types" : {
+      "get" : {
+        "tags" : [ "exercises" ],
+        "summary" : "Returns all subcategories by type",
+        "description" : "Returns 10 values ​​by type",
+        "operationId" : "listExercisesTypes",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page number",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Number of items per page",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "Category exercises",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/exerciseCategory"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns all products",
+        "description" : "Returns with pagination of 20 values. Able to provide filtered values, by word, category and recommendation",
+        "operationId" : "listProducts",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Page number",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Number of items per page",
+          "required" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "recommended",
+          "in" : "query",
+          "description" : "Subcategory ID",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "search",
+          "in" : "query",
+          "description" : "Search by word",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "description" : "Category name",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/product"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/products/category" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns all product categories",
+        "description" : "Returns categories with no additional parameters in the query",
+        "operationId" : "listProductsСategory",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/productCategory"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/diary" : {
+      "get" : {
+        "tags" : [ "diary" ],
+        "summary" : "Returns nutrition and training for a specific date",
+        "description" : "Returns nutrition and training for a specific date passed in parameters",
+        "operationId" : "listDiary",
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "query",
+          "description" : "Diary date",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/diary"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/diary/products" : {
+      "post" : {
+        "tags" : [ "diary" ],
+        "summary" : "Receives information about the consumed product",
+        "description" : "Receives information about the consumed product according to data containing date, product, amount, calories",
+        "operationId" : "addDiaryProducts",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/requestBodies/diaryProduct"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/diaryProduct"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/diary/products/{productId}" : {
+      "delete" : {
+        "tags" : [ "diary" ],
+        "summary" : "Remove product by ID",
+        "description" : "For the correct answer, try integer identifiers that are 24 characters long",
+        "operationId" : "removeDiaryProducts",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "ID of the order that needs to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "65576564b0ecca44f5116d81"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/diaryProductId"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/diary/exercises" : {
+      "post" : {
+        "tags" : [ "diary" ],
+        "summary" : "Receives information about the performed exercise",
+        "description" : "Receives information about the performed exercise based on data containing date, product, time, calories",
+        "operationId" : "addDiaryExercise",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/requestBodies/diaryExercise"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/diaryExercise"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/diary/exercises/{exercisesId}" : {
+      "delete" : {
+        "tags" : [ "diary" ],
+        "summary" : "Delete an exercise by ID",
+        "description" : "For the correct answer, try integer identifiers that are 24 characters long",
+        "operationId" : "removeDiaryExercise",
+        "parameters" : [ {
+          "name" : "exerciseId",
+          "in" : "path",
+          "description" : "ID of the order that needs to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "65576564b0ecca44f5116d81"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/diaryExerciseId"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "bearer auth failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorUnauthorized"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "invalid ID supplied",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/errorInvalidId"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "registerResponses" : {
+        "type" : "object",
+        "properties" : {
+          "user" : {
+            "type" : "object",
+            "properties" : {
+              "email" : {
+                "type" : "string",
+                "examples" : [ "wodof28091@cabose.com" ]
+              },
+              "name" : {
+                "type" : "string",
+                "examples" : [ "TEST_BACKEND" ]
+              },
+              "registrDate" : {
+                "type" : "string",
+                "examples" : [ "2023-11-20T16:29:27.835Z" ]
+              },
+              "avatarURL" : {
+                "type" : "string",
+                "examples" : [ "//www.gravatar.com/avatar/0da91af40fb78b72849a55190efab6b0" ]
+              },
+              "verify" : {
+                "type" : "boolean",
+                "examples" : [ false ]
+              }
+            }
+          }
+        }
+      },
+      "verifyResponses" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "examples" : [ "Verification email sent" ]
+          }
+        }
+      },
+      "verifyTokenResponses" : {
+        "type" : "object",
+        "properties" : {
+          "user" : {
+            "type" : "object",
+            "properties" : {
+              "name" : {
+                "type" : "string",
+                "examples" : [ "TEST_BACKEND" ]
+              },
+              "email" : {
+                "type" : "string",
+                "examples" : [ "wodof28091@cabose.com" ]
+              },
+              "verify" : {
+                "type" : "boolean",
+                "examples" : [ false ]
+              },
+              "registrDate" : {
+                "type" : "string",
+                "examples" : [ "2023-11-20T16:29:27.835Z" ]
+              },
+              "avatarURL" : {
+                "type" : "string",
+                "examples" : [ "//www.gravatar.com/avatar/0da91af40fb78b72849a55190efab6b0" ]
+              },
+              "profileSettings" : {
+                "type" : "string",
+                "examples" : [ null ]
+              }
+            }
+          },
+          "token" : {
+            "type" : "string",
+            "examples" : [ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWI4OTY3NTZjZWIzNDAzMDFkM2MwNyIsImlhdCI6MTcwMDUwMTQzOSwiZXhwIjoxNzAzMDkzNDM5fQ.r3-Wj50dT_3cHbNbMYR1l6Rp5V8-b6aMUTW2ukGKoOs" ]
+          }
+        }
+      },
+      "loginResponses" : {
+        "type" : "object",
+        "properties" : {
+          "user" : {
+            "type" : "object",
+            "properties" : {
+              "email" : {
+                "type" : "string",
+                "examples" : [ "wodof28091@cabose.com" ]
+              },
+              "name" : {
+                "type" : "string",
+                "examples" : [ "TEST_BACKEND" ]
+              },
+              "registrDate" : {
+                "type" : "string",
+                "examples" : [ "2023-11-20T16:29:27.835Z" ]
+              },
+              "avatarURL" : {
+                "type" : "string",
+                "examples" : [ "//www.gravatar.com/avatar/0da91af40fb78b72849a55190efab6b0" ]
+              },
+              "profileSettings" : {
+                "examples" : [ null ]
+              }
+            }
+          },
+          "token" : {
+            "type" : "string",
+            "examples" : [ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWI4OTY3NTZjZWIzNDAzMDFkM2MwNyIsImlhdCI6MTcwMDUwMTQzOSwiZXhwIjoxNzAzMDkzNDM5fQ.r3-Wj50dT_3cHbNbMYR1l6Rp5V8-b6aMUTW2ukGKoOs" ]
+          }
+        }
+      },
+      "changePasswordResponses" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "examples" : [ "Verification link has been sent on your Email, please check it." ]
+          }
+        }
+      },
+      "currentResponses" : {
+        "type" : "object",
+        "properties" : {
+          "user" : {
+            "type" : "object",
+            "properties" : {
+              "email" : {
+                "type" : "string",
+                "examples" : [ "wodof28091@cabose.com" ]
+              },
+              "name" : {
+                "type" : "string",
+                "examples" : [ "TEST_BACKEND" ]
+              },
+              "registrDate" : {
+                "type" : "string",
+                "examples" : [ "2023-11-20T16:29:27.835Z" ]
+              },
+              "avatarURL" : {
+                "type" : "string",
+                "examples" : [ "//www.gravatar.com/avatar/0da91af40fb78b72849a55190efab6b0" ]
+              },
+              "profileSettings" : {
+                "examples" : [ null ]
+              }
+            }
+          },
+          "token" : {
+            "type" : "string",
+            "examples" : [ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWI4OTY3NTZjZWIzNDAzMDFkM2MwNyIsImlhdCI6MTcwMDUwMTQzOSwiZXhwIjoxNzAzMDkzNDM5fQ.r3-Wj50dT_3cHbNbMYR1l6Rp5V8-b6aMUTW2ukGKoOs" ]
+          }
+        }
+      },
+      "errorUnauthorized" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "examples" : [ "Not authorized" ]
+          }
+        }
+      },
+      "errorInvalidId" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "examples" : [ "Not found" ]
+          }
+        }
+      },
+      "exercise" : {
+        "type" : "object",
+        "properties" : {
+          "bodyPart" : {
+            "type" : "string",
+            "examples" : [ "back" ]
+          },
+          "equipment" : {
+            "type" : "string",
+            "examples" : [ "barbell" ]
+          },
+          "gifUrl" : {
+            "type" : "string",
+            "examples" : [ "https://ftp.goit.study/img/power-pulse/gifs/0049.gif" ]
+          },
+          "name" : {
+            "type" : "string",
+            "examples" : [ "barbell incline row" ]
+          },
+          "target" : {
+            "type" : "string",
+            "examples" : [ "upper back" ]
+          },
+          "burnedCalories" : {
+            "type" : "number",
+            "examples" : [ 112 ]
+          },
+          "time" : {
+            "type" : "number",
+            "examples" : [ 3 ]
+          }
+        }
+      },
+      "exerciseCategory" : {
+        "type" : "object",
+        "properties" : {
+          "filter" : {
+            "type" : "string",
+            "examples" : [ "Body parts" ]
+          },
+          "name" : {
+            "type" : "string",
+            "examples" : [ "waist" ]
+          },
+          "imgURL" : {
+            "type" : "string",
+            "examples" : [ "https://ftp.goit.study/img/power-pulse/filters/waist_i7kqzq.jpg" ]
+          }
+        }
+      },
+      "product" : {
+        "type" : "object",
+        "properties" : {
+          "weight" : {
+            "type" : "number",
+            "examples" : [ 100 ]
+          },
+          "calories" : {
+            "type" : "number",
+            "examples" : [ 81 ]
+          },
+          "category" : {
+            "type" : "string",
+            "examples" : [ "meat" ]
+          },
+          "title" : {
+            "type" : "string",
+            "examples" : [ "Venison stew Special" ]
+          },
+          "groupBloodNotAllowed" : {
+            "type" : "object",
+            "properties" : {
+              "1" : {
+                "type" : "boolean"
+              },
+              "2" : {
+                "type" : "boolean"
+              },
+              "3" : {
+                "type" : "boolean"
+              },
+              "4" : {
+                "type" : "boolean"
+              }
+            },
+            "examples" : [ {
+              "1" : true
+            } ]
+          }
+        }
+      },
+      "productCategory" : {
+        "type" : "array",
+        "items" : {
+          "type" : "string",
+          "enum" : [ "alcoholic drinks, berries" ]
+        }
+      },
+      "diary" : {
+        "type" : "object",
+        "properties" : {
+          "products" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/diaryProduct"
+            }
+          },
+          "exercises" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/diaryExercise"
+            }
+          }
+        }
+      },
+      "diaryProduct" : {
+        "type" : "object",
+        "required" : [ "id", "title", "category", "calories", "amount", "recommended" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "examples" : [ "5d51694902b2373622ff5773" ]
+          },
+          "title" : {
+            "type" : "string",
+            "examples" : [ "Danbo cheese" ]
+          },
+          "category" : {
+            "type" : "string",
+            "examples" : [ "dairy" ]
+          },
+          "calories" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          },
+          "amount" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          },
+          "recommended" : {
+            "type" : "boolean",
+            "examples" : [ true ]
+          }
+        }
+      },
+      "diaryProductId" : {
+        "type" : "object",
+        "required" : [ "_id", "owner", "date", "product", "amount", "calories" ],
+        "properties" : {
+          "_id" : {
+            "type" : "string",
+            "examples" : [ "6557642ab0ecca44f5116d63" ]
+          },
+          "owner" : {
+            "type" : "string",
+            "examples" : [ "654fab2b7adda062fc24f415" ]
+          },
+          "date" : {
+            "type" : "string",
+            "examples" : [ "2023-11-17T00:00:00.000Z" ]
+          },
+          "product" : {
+            "type" : "string",
+            "examples" : [ "5d51694902b2373622ff5e13" ]
+          },
+          "amount" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          },
+          "calories" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          }
+        }
+      },
+      "diaryExercise" : {
+        "type" : "object",
+        "required" : [ "id", "bodyPart", "equipment", "name", "target", "calories", "time" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "examples" : [ "64f2458d6f67bc34bae4f7f7" ]
+          },
+          "bodyPart" : {
+            "type" : "string",
+            "examples" : [ "chest" ]
+          },
+          "equipment" : {
+            "type" : "string",
+            "examples" : [ "leverage machine" ]
+          },
+          "name" : {
+            "type" : "string",
+            "examples" : [ "assisted chest dip (kneeling)" ]
+          },
+          "target" : {
+            "type" : "string",
+            "examples" : [ "pectorals" ]
+          },
+          "calories" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          },
+          "time" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          }
+        }
+      },
+      "diaryExerciseId" : {
+        "type" : "object",
+        "required" : [ "_id", "owner", "date", "exercise", "time", "calories" ],
+        "properties" : {
+          "_id" : {
+            "type" : "string",
+            "examples" : [ "65566c6dae5b0e9be1fe3ba5" ]
+          },
+          "owner" : {
+            "type" : "string",
+            "examples" : [ "6551016ede3a01ca35417b22" ]
+          },
+          "date" : {
+            "type" : "string",
+            "examples" : [ "2023-11-14T00:00:00.000Z" ]
+          },
+          "exercise" : {
+            "type" : "string",
+            "examples" : [ "64f2458d6f67bc34bae4f7f7" ]
+          },
+          "time" : {
+            "type" : "number",
+            "examples" : [ 4 ]
+          },
+          "calories" : {
+            "type" : "number",
+            "examples" : [ 14 ]
+          }
+        }
+      }
+    },
+    "responses" : null,
+    "requestBodies" : {
+      "registerRequestBodies" : {
+        "type" : "object",
+        "required" : true,
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "examples" : [ "TEST_BACKEND" ]
+          },
+          "email" : {
+            "type" : "string",
+            "examples" : [ "wodof28091@cabose.com" ]
+          },
+          "password" : {
+            "type" : "string",
+            "examples" : [ 123456 ]
+          }
+        }
+      },
+      "verifyRequestBodies" : {
+        "type" : "object",
+        "required" : true,
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "examples" : [ "wodof28091@cabose.com" ]
+          }
+        }
+      },
+      "loginRequestBodies" : {
+        "type" : "object",
+        "required" : true,
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "examples" : [ "wodof28091@cabose.com" ]
+          },
+          "password" : {
+            "type" : "string",
+            "examples" : [ 123456 ]
+          }
+        }
+      },
+      "changePasswordBodies" : {
+        "type" : "object",
+        "required" : true,
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "examples" : [ "wodof28091@cabose.com" ]
+          }
+        }
+      },
+      "changePasswordTokenBodies" : {
+        "type" : "object",
+        "required" : true,
+        "properties" : {
+          "password" : {
+            "type" : "string",
+            "examples" : [ "qwerty" ]
+          }
+        }
+      },
+      "DiaryProduct" : {
+        "description" : "Pet object that needs to be added to the store",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Pet"
+            }
+          }
+        }
+      },
+      "diaryProduct" : {
+        "type" : "object",
+        "required" : true,
+        "properties" : {
+          "date" : {
+            "type" : "string",
+            "examples" : [ "2023-11-13" ]
+          },
+          "product" : {
+            "type" : "string",
+            "examples" : [ "5d51694902b2373622ff5773" ]
+          },
+          "amount" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          },
+          "calories" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          }
+        }
+      },
+      "diaryExercise" : {
+        "type" : "object",
+        "required" : true,
+        "properties" : {
+          "date" : {
+            "type" : "string",
+            "examples" : [ "2023-11-13" ]
+          },
+          "exercise" : {
+            "type" : "string",
+            "examples" : [ "64f2458d6f67bc34bae4f7f7" ]
+          },
+          "time" : {
+            "type" : "number",
+            "examples" : [ 3 ]
+          },
+          "calories" : {
+            "type" : "number",
+            "examples" : [ 13 ]
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}
