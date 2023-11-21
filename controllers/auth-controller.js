@@ -22,11 +22,11 @@ cloudinary.config({
 
 const registration = async (req, res) => {
     const { email, password } = req.body;
+    if (user) throw httpError(409, "Email in use");
     const hashPassword = await bcrypt.hash(password, 10);
     const verificationToken = nanoid();
     const user = await User.findOne({ email });
     const avatarURL = gravatar.url(email)
-    if (user) throw httpError(409, "Email in use");
 
     const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationToken });
 
@@ -100,7 +100,7 @@ const changePasswordSendMail = async (req, res) => {
     const verifyEmail = {
         to: email,
         subject: 'Power Pulse Team <Change password request>',
-        html: `<a target="_blank" href="http://localhost:3000/changePassword/${verificationToken}">Click to verify email</a>`
+        html: `<a target="_blank" href="http://localhost:3000/PowerPulser/password/${verificationToken}">Click to verify email</a>`
     };
 
     await sendEmail(verifyEmail);
@@ -189,8 +189,8 @@ const updateAvatar = async (req, res) => {
         });
     }
     catch (error) {
-        console.error('Ошибка при загрузке аватарки:', error);
-        res.status(500).json({ error: 'Ошибка при загрузке аватарки' });
+        console.error('error loading avatar:', error);
+        res.status(500).json({ error: 'error loading avatar:' });
     }
 };
 

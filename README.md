@@ -128,6 +128,24 @@ Respose:
 404: User not found
 400: Bad Request
 
+## Change Avatar
+PATCH: https://power-pulse-dq7h.onrender.com/api/users/avatar   
+
+Content-Type: multipart/form-data;
+Authorization: Bearer Token
+
+form-data: 
+avatar: file
+
+Respose: 
+200: OK
+{
+    "avatarURL": "https://res.cloudinary.com/ddko4tdbl/image/upload/v1700509283/kdlo4gcbp008db7vhqjk.jpg"
+}
+404: User not found
+401: Unauthorized
+
+
 # Profile Settings
 
 ## Add Profile settings
