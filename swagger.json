@@ -25,7 +25,7 @@
     "description" : "Operations about diary"
   } ],
   "paths" : {
-    "/user/register" : {
+    "/users/register" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "Create user",
@@ -75,7 +75,7 @@
         }
       }
     },
-    "/user/verify/{verificationToken}" : {
+    "/users/verify/{verificationToken}" : {
       "get" : {
         "tags" : [ "user" ],
         "summary" : "Verification token",
@@ -108,7 +108,7 @@
         }
       }
     },
-    "/user/verify" : {
+    "/users/verify" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "Resend verification link on email",
@@ -158,7 +158,7 @@
         }
       }
     },
-    "/user/login" : {
+    "/users/login" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "User login",
@@ -208,7 +208,7 @@
         }
       }
     },
-    "/user/changePassword" : {
+    "/users/changePassword" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "Password change",
@@ -248,7 +248,7 @@
         }
       }
     },
-    "/user/changePassword/{verificationToken}" : {
+    "/users/changePassword/{verificationToken}" : {
       "patch" : {
         "tags" : [ "user" ],
         "summary" : "Verification token",
@@ -280,7 +280,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/loginResponses"
+                  "$ref" : "#/components/schemas/changePasswordTokenResponses"
                 }
               }
             }
@@ -308,7 +308,7 @@
         }
       }
     },
-    "/user/logout" : {
+    "/users/logout" : {
       "post" : {
         "tags" : [ "user" ],
         "summary" : "User exit",
@@ -337,7 +337,7 @@
         } ]
       }
     },
-    "/user/current" : {
+    "/users/current" : {
       "get" : {
         "tags" : [ "user" ],
         "summary" : "Information about the current user",
@@ -370,7 +370,7 @@
         } ]
       }
     },
-    "/user/avatar" : {
+    "/users/avatar" : {
       "patch" : {
         "tags" : [ "user" ],
         "summary" : "Uploading an avatar",
@@ -568,10 +568,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/exercise"
-                  }
+                  "$ref" : "#/components/schemas/exercise"
                 }
               }
             }
@@ -629,10 +626,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/exerciseCategory"
-                  }
+                  "$ref" : "#/components/schemas/exerciseCategory"
                 }
               }
             }
@@ -706,10 +700,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/product"
-                  }
+                  "$ref" : "#/components/schemas/product"
                 }
               }
             }
@@ -1110,6 +1101,15 @@
           }
         }
       },
+      "changePasswordTokenResponses" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "examples" : [ "Password has been changed, please logged in with new password." ]
+          }
+        }
+      },
       "currentResponses" : {
         "type" : "object",
         "properties" : {
@@ -1164,91 +1164,135 @@
       "exercise" : {
         "type" : "object",
         "properties" : {
-          "bodyPart" : {
-            "type" : "string",
-            "examples" : [ "back" ]
+          "totalRecords" : {
+            "type" : "integer"
           },
-          "equipment" : {
-            "type" : "string",
-            "examples" : [ "barbell" ]
-          },
-          "gifUrl" : {
-            "type" : "string",
-            "examples" : [ "https://ftp.goit.study/img/power-pulse/gifs/0049.gif" ]
-          },
-          "name" : {
-            "type" : "string",
-            "examples" : [ "barbell incline row" ]
-          },
-          "target" : {
-            "type" : "string",
-            "examples" : [ "upper back" ]
-          },
-          "burnedCalories" : {
-            "type" : "number",
-            "examples" : [ 112 ]
-          },
-          "time" : {
-            "type" : "number",
-            "examples" : [ 3 ]
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "_id" : {
+                  "type" : "string",
+                  "examples" : [ "64f2458d6f67bc34bae4f801" ]
+                },
+                "bodyPart" : {
+                  "type" : "string",
+                  "examples" : [ "upper arms" ]
+                },
+                "equipment" : {
+                  "type" : "string",
+                  "examples" : [ "leverage machine" ]
+                },
+                "gifUrl" : {
+                  "type" : "string",
+                  "examples" : [ "https://ftp.goit.study/img/power-pulse/gifs/0019.gif" ]
+                },
+                "name" : {
+                  "type" : "string",
+                  "examples" : [ "assisted triceps dip (kneeling)" ]
+                },
+                "target" : {
+                  "type" : "string",
+                  "examples" : [ "triceps" ]
+                },
+                "burnedCalories" : {
+                  "type" : "number",
+                  "examples" : [ 233 ]
+                },
+                "time" : {
+                  "type" : "number",
+                  "examples" : [ 3 ]
+                }
+              }
+            }
           }
         }
       },
       "exerciseCategory" : {
         "type" : "object",
         "properties" : {
-          "filter" : {
-            "type" : "string",
-            "examples" : [ "Body parts" ]
+          "totalRecords" : {
+            "type" : "integer",
+            "examples" : [ 19 ]
           },
-          "name" : {
-            "type" : "string",
-            "examples" : [ "waist" ]
-          },
-          "imgURL" : {
-            "type" : "string",
-            "examples" : [ "https://ftp.goit.study/img/power-pulse/filters/waist_i7kqzq.jpg" ]
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "_id" : {
+                  "type" : "string",
+                  "examples" : [ "650f35ece3f5522fc63962c0" ]
+                },
+                "filter" : {
+                  "type" : "string",
+                  "examples" : [ "Muscles" ]
+                },
+                "name" : {
+                  "type" : "string",
+                  "examples" : [ "triceps" ]
+                },
+                "imgURL" : {
+                  "type" : "string",
+                  "examples" : [ "https://ftp.goit.study/img/power-pulse/filters/triceps_koatge.jpg" ]
+                }
+              }
+            }
           }
         }
       },
       "product" : {
         "type" : "object",
         "properties" : {
-          "weight" : {
-            "type" : "number",
-            "examples" : [ 100 ]
+          "totalRecords" : {
+            "type" : "integer",
+            "examples" : [ 2621 ]
           },
-          "calories" : {
-            "type" : "number",
-            "examples" : [ 81 ]
-          },
-          "category" : {
-            "type" : "string",
-            "examples" : [ "meat" ]
-          },
-          "title" : {
-            "type" : "string",
-            "examples" : [ "Venison stew Special" ]
-          },
-          "groupBloodNotAllowed" : {
-            "type" : "object",
-            "properties" : {
-              "1" : {
-                "type" : "boolean"
-              },
-              "2" : {
-                "type" : "boolean"
-              },
-              "3" : {
-                "type" : "boolean"
-              },
-              "4" : {
-                "type" : "boolean"
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "groupBloodNotAllowed" : {
+                  "type" : "object",
+                  "properties" : {
+                    "1" : {
+                      "type" : "boolean"
+                    },
+                    "2" : {
+                      "type" : "boolean"
+                    },
+                    "3" : {
+                      "type" : "boolean"
+                    },
+                    "4" : {
+                      "type" : "boolean"
+                    }
+                  }
+                },
+                "_id" : {
+                  "type" : "string",
+                  "examples" : [ "5d51694902b2373622ff59e8" ]
+                },
+                "weight" : {
+                  "type" : "number",
+                  "examples" : [ 100 ]
+                },
+                "calories" : {
+                  "type" : "number",
+                  "examples" : [ 81 ]
+                },
+                "category" : {
+                  "type" : "string",
+                  "examples" : [ "meat" ]
+                },
+                "title" : {
+                  "type" : "string",
+                  "examples" : [ "Venison stew Special" ]
+                }
               }
-            },
-            "examples" : [ {
-              "1" : true
-            } ]
+            }
           }
         }
       },
