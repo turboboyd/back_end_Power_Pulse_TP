@@ -37,7 +37,7 @@ const registration = async (req, res) => {
             <div>
                 <h1>Greetings from the Power Pulse team!</h1>
                 <h3>We have received your registration request for our service. To confirm your registration, please follow the link below.</h3>
-                <a target="_blank" href="https://turboboyd.github.io/PowerPulser/api/users/verify/${verificationToken}">Click to verify email</a>
+                <a target="_blank" href="https://turboboyd.github.io/PowerPulser/verify/${verificationToken}">Click to verify email</a>
 
                 <p>If you did not register with us, simply ignore this email.</p>
             </div>   
