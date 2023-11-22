@@ -33,7 +33,7 @@ const registration = async (req, res) => {
     const verifyEmail = {
         to: email,
         subject: 'Power Pulse Team <Verify Email request>',
-        html: `<a target="_blank" href="http://localhost:3000/verify/${verificationToken}">Click to verify email</a>`
+        html: `<a target="_blank" href="https://turboboyd.github.io/PowerPulser/verify/${verificationToken}">Click to verify email</a>`
     };
 
     await sendEmail(verifyEmail);
@@ -54,7 +54,7 @@ const verify = async (req, res) => {
     const user = await User.findOne({ verificationToken });
     if (!user) throw httpError(404, 'User not found');
     const payload = { id: user._id };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
     const settings = await ProfileSettings.findOne({ owner: user.id }, "-_id -createdAt -updatedAt -owner");
 
     await User.findByIdAndUpdate(user._id, { verify: true, verificationToken: null, token: token });
@@ -81,7 +81,7 @@ const resendVerifyEmail = async (req, res) => {
     const verifyEmail = {
         to: email,
         subject: 'Power Pulse Team <Verify Email request>',
-        html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${user.verificationToken}">Click to verify email</a>`
+        html: `<a target="_blank" href="https://turboboyd.github.io/PowerPulser/api/users/verify/${user.verificationToken}">Click to verify email</a>`
     };
 
     await sendEmail(verifyEmail);
@@ -100,7 +100,7 @@ const changePasswordSendMail = async (req, res) => {
     const verifyEmail = {
         to: email,
         subject: 'Power Pulse Team <Change password request>',
-        html: `<a target="_blank" href="http://localhost:3000/PowerPulser/password/${verificationToken}">Click to verify email</a>`
+        html: `<a target="_blank" href="https://turboboyd.github.io/PowerPulser/password/${verificationToken}">Click to verify email</a>`
     };
 
     await sendEmail(verifyEmail);
@@ -134,7 +134,7 @@ const authorization = async (req, res) => {
     const passwordCompare = await bcrypt.compare(password, user.password);
     if (!passwordCompare) throw httpError(401, "Email or password invalid");
     const payload = { id: user._id };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
     if (!user.verify) throw httpError(401, 'Email not verify');
 
     await User.findByIdAndUpdate(user._id, { token });
