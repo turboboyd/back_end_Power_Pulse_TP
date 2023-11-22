@@ -22,10 +22,10 @@ cloudinary.config({
 
 const registration = async (req, res) => {
     const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (user) throw httpError(409, "Email in use");
     const hashPassword = await bcrypt.hash(password, 10);
     const verificationToken = nanoid();
-    const user = await User.findOne({ email });
     const avatarURL = gravatar.url(email)
 
     const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationToken });
