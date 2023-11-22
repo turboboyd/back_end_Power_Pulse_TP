@@ -22,18 +22,26 @@ cloudinary.config({
 
 const registration = async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (user) throw httpError(409, "Email in use");
     const hashPassword = await bcrypt.hash(password, 10);
     const verificationToken = nanoid();
     const avatarURL = gravatar.url(email)
 
-    const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationToken });
+    const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL, verificationToken, email: email.toLowerCase() });
 
     const verifyEmail = {
         to: email,
         subject: 'Power Pulse Team <Verify Email request>',
-        html: `<a target="_blank" href="https://turboboyd.github.io/PowerPulser/verify/${verificationToken}">Click to verify email</a>`
+        html: `
+            <div>
+                <h1>Greetings from the Power Pulse team!</h1>
+                <h3>We have received your registration request for our service. To confirm your registration, please follow the link below.</h3>
+                <a target="_blank" href="https://turboboyd.github.io/PowerPulser/api/users/verify/${verificationToken}">Click to verify email</a>
+
+                <p>If you did not register with us, simply ignore this email.</p>
+            </div>   
+        `
     };
 
     await sendEmail(verifyEmail);
@@ -73,7 +81,7 @@ const verify = async (req, res) => {
 
 const resendVerifyEmail = async (req, res) => {
     const { email } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
 
     if (!user) throw httpError(404, 'User not found');
     if (user.verify) throw httpError(400, 'Verification has already been passed');
@@ -81,7 +89,15 @@ const resendVerifyEmail = async (req, res) => {
     const verifyEmail = {
         to: email,
         subject: 'Power Pulse Team <Verify Email request>',
-        html: `<a target="_blank" href="https://turboboyd.github.io/PowerPulser/api/users/verify/${user.verificationToken}">Click to verify email</a>`
+        html: `
+            <div>
+                <h1>Greetings from the Power Pulse team!</h1>
+                <h3>We have received your registration request for our service. To confirm your registration, please follow the link below.</h3>
+                <a target="_blank" href="https://turboboyd.github.io/PowerPulser/api/users/verify/${user.verificationToken}">Click to verify email</a>
+
+                <p>If you did not register with us, simply ignore this email.</p>
+            </div>    
+        `
     };
 
     await sendEmail(verifyEmail);
@@ -94,13 +110,20 @@ const resendVerifyEmail = async (req, res) => {
 const changePasswordSendMail = async (req, res) => {
     const { email } = req.body;
     const verificationToken = nanoid();
-    const findUser = await User.findOneAndUpdate({ email }, { verify: false, verificationToken: verificationToken, token: '' });
+    const findUser = await User.findOneAndUpdate({ email: email.toLowerCase() }, { verify: false, verificationToken: verificationToken, token: '' });
     if (!findUser) throw httpError(404, 'User not found')
 
     const verifyEmail = {
         to: email,
         subject: 'Power Pulse Team <Change password request>',
-        html: `<a target="_blank" href="https://turboboyd.github.io/PowerPulser/password/${verificationToken}">Click to verify email</a>`
+        html: `
+        <div>
+            <h1>Greetings from the Power Pulse team!</h1>
+            <h3>We have received a password reset request from you in our service. To change your password, please follow the link below.</h3>
+            <a target="_blank" href="https://turboboyd.github.io/PowerPulser/password/${verificationToken}">Continue the password reset process</a>
+            <p>If you did not initiate a password reset request, we recommend that you change it immediately to ensure the security of your account.</p>
+        </div>    
+        `
     };
 
     await sendEmail(verifyEmail);
@@ -115,10 +138,10 @@ const changePassword = async (req, res) => {
     const { password } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
     const findUser = await User.findOne({ verificationToken });
-    
-    if(!findUser) throw httpError(404, 'User not found');
 
-    await User.findOneAndUpdate(findUser._id, {verify: true, verificationToken: null, password: hashPassword})
+    if (!findUser) throw httpError(404, 'User not found');
+
+    await User.findOneAndUpdate(findUser._id, { verify: true, verificationToken: null, password: hashPassword })
 
     res.json({
         message: "Password has been changed, please logged in with new password."
@@ -128,7 +151,7 @@ const changePassword = async (req, res) => {
 
 const authorization = async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) throw httpError(401, "Email or password invalid");
     const settings = await ProfileSettings.findOne({ owner: user.id }, "-_id -createdAt -updatedAt -owner");
     const passwordCompare = await bcrypt.compare(password, user.password);
