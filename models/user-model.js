@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 import Joi from 'joi';
 import { handleSaveError, runValidatorsAtUpdate } from './hooks.js';
 
-const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/ ;
 
 const userSchema = new Schema({
     name: {
