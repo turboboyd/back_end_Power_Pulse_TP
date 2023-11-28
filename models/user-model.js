@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 import Joi from 'joi';
 import { handleSaveError, runValidatorsAtUpdate } from './hooks.js';
 
-const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/ ;
+const emailPattern = /^\w+(?:[\w.-]*\w)?@[a-zA-Z_]+(?:\.[a-zA-Z]+)+$/;
 
 const userSchema = new Schema({
     name: {
@@ -47,7 +47,7 @@ export const userRegistrationJoiSchema = Joi.object({
         .string().required()
         .pattern(emailPattern)
         .messages({
-            "string.email": "Invalid email format",
+            "string.pattern.base": "Invalid email format",
             "any.required": "missing required email field",
         }),
     password: Joi.string()
